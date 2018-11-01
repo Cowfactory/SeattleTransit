@@ -1,0 +1,26 @@
+{
+  "name": "seattle-transit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.8",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "serve-favicon": "^2.5.0"
+  }
+}
