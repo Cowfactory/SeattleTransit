@@ -2,4 +2,8 @@
 
 ![App Icon](https://i.imgur.com/Uh7NtT9.png "App Icon")
 
-It's me...Chris!
+
+## Developers:
+### Chris | Full Stack Engineer
+### Sean | Full Stack Engineer
+
