@@ -1,5 +1,8 @@
 <%- include ./partials/header.ejs %>
 
-<p>Hello World!</p>
+<% if (user) { %>
+    <p>Hello, <%= user.name %></p>
+    <p>email: <%= user.email %></p>
+<% } %>
 
 <%- include ./partials/footer.ejs %>
