@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 
+
 // Load env vars
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ require('./config/passport');
 
 // Routers
 const authRouter = require('./routes/auth');
+const apiRouter = require('./routes/api/api');
 const indexRouter = require('./routes/index');
 
 // Configure view engine
@@ -49,6 +51,7 @@ app.use(passport.session());
 
 // Mount Routers
 app.use('/', authRouter);
+app.use('/api', apiRouter);
 app.use('/', indexRouter);
 
 // Start the server - listen for requests

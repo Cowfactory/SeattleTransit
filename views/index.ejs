@@ -1,8 +1,14 @@
 <%- include ./partials/header.ejs %>
 
+<h4>User Welcome:</h4>
+
 <% if (user) { %>
     <p>Hello, <%= user.name %></p>
     <p>email: <%= user.email %></p>
+<% } else { %>
+    <p>No user logged in!</p>
 <% } %>
+
+<hr>
 
 <%- include ./partials/footer.ejs %>
