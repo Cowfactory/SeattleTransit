@@ -7,6 +7,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+// const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 
 
 // Load env vars
@@ -48,6 +49,9 @@ app.use(session({
 // Mount Passport 
 app.use(passport.initialize());
 app.use(passport.session()); 
+
+// Mount Mapbox 
+// app.use(mbxGeocoding({ accessToken: 'your-access-token' }))
 
 // Mount Routers
 app.use('/', authRouter);

@@ -1,4 +1,12 @@
 <%- include ./partials/header.ejs %>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        document.getElementById("mybutton").addEventListener("click", function(e){
+            e.preventDefault();
+            getLocation();
+        });
+    });
+</script>
 
 <h4>User Welcome:</h4>
 
@@ -8,6 +16,11 @@
 <% } else { %>
     <p>No user logged in!</p>
 <% } %>
+<div>
+    <button class="btn white-text blue" id="mybutton">Get my location</button>
+    <p id="currentlocation">Current Location...</p>
+</div>
+
 
 <hr>
 
