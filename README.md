@@ -2,7 +2,7 @@
 [View the functioning App!](https://heroku.com)
 
 
-![App Icon](https://i.imgur.com/Uh7NtT9.png "App Icon")
+![App Icon](https://i.imgur.com/Uh7NtT9.png "App Logo")
 
 
 ## Developers:
@@ -19,6 +19,7 @@
 * NodeJS
 * ExpressJS
 * ES6
+* Materialize
 * RESTful
 * mongoDB
 * mapbox API
@@ -26,14 +27,22 @@
 * socket.io
 
 # Trello Board
-[User Stories, ERD, wireframes](https://trello.com/b/PbPrVOeq)
+[User Stories, Wireframes](https://trello.com/b/PbPrVOeq)
+
+# ERD
+![ERD](https://i.imgur.com/FJIiqW1.png "DB Models for the SeattleTransit app")
 
 # RESTful API endpoints
-* GET - "/" - index
-* GET - "/routes"
-* GET - "/routes"
+| Verb        | Path           | Endpoint  |
+| ------------- |-------------| -----|
+| GET   | /             | index |
+| GET   | /stops        | view all stops |
+| GET   | /stops/:id    | view one stop |
+| GET   | /routes       | view all routes |
+| GET   | /routes/:id   | view one route |
 
 # Unsolved Problems
 * None! We rock ;)
 
 # Future Enhancements
+* TBD
