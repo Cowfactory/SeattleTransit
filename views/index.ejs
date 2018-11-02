@@ -1,21 +1,19 @@
 <%- include ./partials/header.ejs %>
-<script>
-    document.addEventListener("DOMContentLoaded", function(){
-        document.getElementById("mybutton").addEventListener("click", function(e){
-            e.preventDefault();
-            getLocation();
-        });
-    });
-</script>
 
 <% if (user) { %>
     <p>Hello, <%= user.name %></p>
     <p>email: <%= user.email %></p>
 <% } %>
-<div>
+
+<!-- Diplaying Map -->
+<div id='map' style="height: 600px; width: 100%; margin: auto"></div>
+
+<!-- Button to get current location -->>
+<div class="center">
     <button class="btn white-text blue" id="mybutton">Get my location</button>
     <p id="currentlocation">Current Location...</p>
 </div>
 
+<script src="/js/map.js"></script>
 
 <%- include ./partials/footer.ejs %>
