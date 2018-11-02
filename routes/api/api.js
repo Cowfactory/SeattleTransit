@@ -7,8 +7,6 @@ OBA_KEY = process.env.ONEBUSAWAY_APIKEY;
 STOPS_FOR_LOCATION = `${API_ENDPOINT}stops-for-location.json${OBA_KEY}`
 
 router.get('/stopsAtLocation', function (req, res, next) {
-    console.log(req.query.lat);
-
     getStopsForLocation(req.query.lat, req.query.lon)
         .then(response => {
             stops = response.data.data.list;
