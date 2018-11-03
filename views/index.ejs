@@ -1,14 +1,20 @@
 <%- include ./partials/header.ejs %>
 
-<h4>User Welcome:</h4>
+<!-- Diplaying Map -->
+<div id='map' style="height: 600px; width: 100%; margin: auto"></div>
 
-<% if (user) { %>
-    <p>Hello, <%= user.name %></p>
-    <p>email: <%= user.email %></p>
-<% } else { %>
-    <p>No user logged in!</p>
-<% } %>
+<!-- Button to get current location -->
 
+<div class="center">
+    <h4>Find nearby stops:</h4>
+    <button class="btn white-text blue" id="searchBtn">Find Nearby Stops</button>
+    <ul id="stopList">
+        
+    </ul>
+</div>
 <hr>
+
+<script src="/js/geolocation.js" defer></script>
+<script src="/js/map.js" defer></script>
 
 <%- include ./partials/footer.ejs %>

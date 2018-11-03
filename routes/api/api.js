@@ -10,10 +10,10 @@ router.get('/stopsAtLocation', function (req, res, next) {
     getStopsForLocation(req.query.lat, req.query.lon)
         .then(response => {
             stops = response.data.data.list;
-            res.json(stops);
+            res.status(200).json(stops);
         })
         .catch(err => {
-            return next(err);
+            res.status(404);
         })
 });
 

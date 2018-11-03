@@ -1,25 +1,26 @@
-const geolocation = (() => {    
-    function getLocation() {
+geolocate = (function () {
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    function getCoordinates(cb) {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, errorCallback);
+            navigator.geolocation.getCurrentPosition(cb, err, options);
         } else {
-            var location = document.getElementById("currentlocation");
+            let location = document.getElementById("currentlocation");
             location.innerHTML = "Geolocation is not supported by this browser.";
         }
     };
 
-    function showPosition(position) {
-        var location = document.getElementById("currentlocation");
-        location.innerHTML = "Latitude: " + position.coords.latitude + 
-        "<br>Longitude: " + position.coords.longitude; 
-    };
     
-    function errorCallback(err){
+    function err(err){
         console.log('Houston...we have a problem. User did not allow the app to check for location', err);
-    };
+    }
 
     return {
-        getLocation
-    };
-})();
-    
+        getCoordinates
+    }
+})();   
+
