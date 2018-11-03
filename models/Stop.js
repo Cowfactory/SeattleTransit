@@ -1,15 +1,23 @@
 const mongoose = require('mongoose');
 
 const stopSchema = new mongoose.Schema({
-    identifier: {
+    stop_name: {
         type: String,
         required: true
     },
-    intersection: {
-        type: String,
+    stop_id: {
+        type: Number,
         required: true
     },
-    buslines: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BusLine' }]    
+    stop_lat: {
+        type: Number,
+        required: true
+    },
+    stop_lon: {
+        type: Number,
+        required: true
+    },
+    busroutes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BusRoute' }]    
 }, {
     timestamps: true
 });
