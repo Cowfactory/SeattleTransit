@@ -1,25 +1,26 @@
-    document.addEventListener("DOMContentLoaded", function(){
-        document.getElementById("mybutton").addEventListener("click", function(e){
-            e.preventDefault();
-            getLocation();
-        });
-    });
+geolocate = (function () {
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, errorCallback);
-    } else {
-        var location = document.getElementById("currentlocation");
-        location.innerHTML = "Geolocation is not supported by this browser.";
+    function getCoordinates(cb) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(cb, err, options);
+        } else {
+            let location = document.getElementById("currentlocation");
+            location.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    };
+
+    
+    function err(err){
+        console.log('Houston...we have a problem. User did not allow the app to check for location', err);
     }
-};
-function showPosition(position) {
-    var location = document.getElementById("currentlocation");
-    console.log('success function!', position);
-    location.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude; 
-};
 
-function errorCallback(err){
-    console.log('Houston...we have a problem. User did not allow the app to check for location', err);
-}
+    return {
+        getCoordinates
+    }
+})();   
+
