@@ -18,7 +18,6 @@ function addEventListeners() {
     searchBtn.addEventListener("click", findNearbyStops);
 };
 
-// 
 function findNearbyStops() {
     geolocate.getCoordinates(position => {
         let lat = position.coords.latitude;
@@ -34,7 +33,7 @@ function queryStopsAtLocation(lat, lon) {
 }
 
 function renderStops(stops) {
-    console.log(stops);
+    // console.log(stops); // Uncomment to view all the data available to a Stop in console
     stops.forEach(stop => {
         let el = document.createElement('li');
         let div = document.createElement('div');
