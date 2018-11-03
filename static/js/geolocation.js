@@ -14,7 +14,6 @@ geolocate = (function () {
         }
     };
 
-    
     function err(err){
         console.log('Houston...we have a problem. User did not allow the app to check for location', err);
     }
