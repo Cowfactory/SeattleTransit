@@ -1,16 +1,12 @@
 # SeattleTransit
 [View the functioning App!](https://heroku.com)
 
-
 ![App Icon](https://i.imgur.com/Uh7NtT9.png "App Logo")
 
 ## Developers:
 ### Chris | Full Stack Engineer
 ### Henry | Full Stack Engineer
 ### Sean | Full Stack Engineer
-### Henry | Full stack Engineer
-
-#
 
 # Pitch Deck:
 [View it on AdobeXD...](https://xd.adobe.com/view/a20c328d-2614-43c0-442b-c5a0dc3302d6-d43d/?fullscreen&hints=off)
