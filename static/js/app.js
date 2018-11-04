@@ -4,6 +4,7 @@ var stopList;
 document.addEventListener("DOMContentLoaded", function() {
     cacheDomElements();
     addEventListeners();
+    sideNav();
 });
 
 function cacheDomElements() {
@@ -43,3 +44,13 @@ function renderStops(stops) {
         div.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
     });
 }
+
+function sideNav() {
+    var elem = document.querySelector('.sidenav');
+    var instance = new M.Sidenav(elem);
+    var collapsibleElem = document.querySelector('.collapsible');
+    var collapsibleInstance = new M.Collapsible(collapsibleElem, options);
+    // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+    // var collapsibleElem = document.querySelector('.collapsible');
+    // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+};

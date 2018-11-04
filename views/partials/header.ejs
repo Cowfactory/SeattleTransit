@@ -7,7 +7,7 @@
     <!-- Google Icon Fonts used by Materialize -->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Map Box -->
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet'>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
@@ -15,11 +15,11 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     
     <!-- jQuery (required by Materialize) -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous" defer></script>
     <!-- Using Underscore for collection manipulation and client-side templating -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" defer></script>
     <!-- JavaScript for Materialize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
     <!-- Mapbox link -->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
@@ -30,7 +30,8 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper green">
-                <a href="/" class="brand-logo left">Seattle Transit</a>
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="large material-icons">menu</i></a>
+                <a href="/" class="brand-logo center">Seattle Transit</a>
                 <ul class="right">
                     <li>
                         <% if(user) { %>
@@ -49,4 +50,31 @@
             </div>
         </nav>
     </div>
-  
+
+
+<!-- Sidenav -->  
+<ul id="slide-out" class="sidenav green">
+    <li>
+        <div class="user-view">
+            <br>
+            <div class="background white">
+                <!-- <img src="images/office.jpg"> -->
+            </div>
+            <%% if (user) { %%>
+                <img src="<%%= user.avatar %%>" alt="" class="circle responsive-img">&nbsp;&nbsp;
+            <%% } else { %%>
+                <i class="small material-icons">perm_identity</i>
+            <%% } %%>
+                <span class="card-title"><%%= user.name %%></span>
+            <%% } %%>
+            <!-- <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+            <a href="#name"><span class="white-text name">John Doe</span></a>
+            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
+        </div>
+    </li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+</ul>
