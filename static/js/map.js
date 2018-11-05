@@ -23,7 +23,38 @@ const map = (() => {
 
     // Map display controls
     map.addControl(new mapboxgl.NavigationControl());
-    
+
+    // Render bus stops on map
+    map.on('click', function () {
+        let points = 0;
+        stopCoord.forEach(stop => {
+            map.addLayer({
+                "id": `points ${points++}`,
+                "type": "symbol",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": stop
+                            },
+                            "properties": {
+                                "icon": "bus"
+                            }
+                        }]
+                    }
+                },
+                "layout": {
+                    "icon-image": "{icon}-15"
+                }
+            });
+        });
+    });
+
+    // Current location
     function getCoordinates() {
         let gl = [];
         lat = map.transform._center.lat;

@@ -1,5 +1,6 @@
 var searchBtn;
 var stopList;
+var stopCoord = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     cacheDomElements();
@@ -40,6 +41,9 @@ function renderStops(stops) {
         el.appendChild(div);
         stopList.appendChild(el);
 
-        div.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
+        stopCoord.push([stop.lon, stop.lat]);
+
+        div.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`;
     });
+    return stopCoord;
 }
