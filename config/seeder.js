@@ -4,7 +4,7 @@ require('./database');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const Stop = require('../models/Stop');
-const URL = `http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=${process.env.ONEBUSAWAY_APIKEY}&lat=47.653435&lon=-122.305641&radius=500`
+const URL = `http://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?key=${process.env.ONEBUSAWAY_APIKEY}&lat=47.653435&lon=-122.305641&radius=3000`
 
 mongoose.connection.on('open', () => {
     // 1. Delete everything from db
@@ -25,9 +25,10 @@ mongoose.connection.on('open', () => {
 function saveStops() {
     queryAPIForAllStops()
         .then(response => {
-            if(typeof response === undefined || typeof response.data.data.list === undefined) {
+            if(typeof response === undefined || typeof response.data === undefined) {
                 console.log("No data received");
                 Promise.reject("No data received");
+                process.exit();
             }
 
             stops = response.data.data.list;
