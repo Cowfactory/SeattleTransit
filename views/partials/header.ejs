@@ -53,28 +53,27 @@
 
 
 <!-- Sidenav -->  
-<ul id="slide-out" class="sidenav green">
-    <li>
-        <div class="user-view">
-            <br>
-            <div class="background white">
-                <!-- <img src="images/office.jpg"> -->
+<div id="slide-out" class="sidenav green">
+    <div class="user-view sidebar-userinfo">
+        <br>
+        <div class="background white valign-wrapper profile">
+            <div class="profile">
+                <% if (user) { %>
+                    <img src="<%= user.avatar %>" alt="" class="circle responsive-img">&nbsp;&nbsp;
+                    <span class="card-title"><%= user.name %></span>
+                <% } else { %>
+                    <a href="/auth/google">Please Log In</a>
+                <% } %>
             </div>
-            <%% if (user) { %%>
-                <img src="<%%= user.avatar %%>" alt="" class="circle responsive-img">&nbsp;&nbsp;
-            <%% } else { %%>
-                <i class="small material-icons">perm_identity</i>
-            <%% } %%>
-                <span class="card-title"><%%= user.name %%></span>
-            <%% } %%>
-            <!-- <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-            <a href="#name"><span class="white-text name">John Doe</span></a>
-            <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
         </div>
-    </li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-</ul>
+    </div>
+    <div class="center-align">
+        <button a href="#!" class="pillbutton"><i class="tiny material-icons">favorite</i>Favorites</button>
+        <br>
+        <button a href="#!" class="pillbutton"><i class="tiny material-icons">location_on</i>Locate Me</button>
+        <br>
+        <button a href="#!" class="pillbutton"><i class="tiny material-icons">add_alert</i>Reminders</button>
+        <br>
+        <button a href="#!" class="pillbutton"><i class="tiny material-icons">date_range</i>Schedules</button>
+    </div>
+</div>

@@ -9,3 +9,36 @@ html, body {
     height: 74vh; 
     width: 100vw; 
 }
+
+.pillbutton {
+    background-color: #ffffff;
+    border: none;
+    color: black;
+    padding: 16px 6vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 8% 2px;
+    cursor: pointer;
+    border-radius: 28px;
+}
+.pillbutton:hover {
+    background-color: #f1f1f1;
+}
+.circle {
+    display: inline-block !important;
+}
+i {
+    padding: 0 10px 0 0;
+}
+
+.sidebar-userinfo {
+    height: 25vh;
+}
+.profile{
+    text-align: center;
+    padding:1em;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
