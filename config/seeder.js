@@ -25,7 +25,7 @@ mongoose.connection.on('open', () => {
 function saveStops() {
     queryAPIForAllStops()
         .then(response => {
-            if(typeof response === undefined || typeof response.data === undefined) {
+            if(typeof response === undefined || typeof response.data.data.list === undefined) {
                 console.log("No data received");
                 Promise.reject("No data received");
                 process.exit();

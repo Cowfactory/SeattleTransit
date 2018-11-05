@@ -1,6 +1,7 @@
 var searchBtn;
 var stopList;
 
+// Setup functions
 document.addEventListener("DOMContentLoaded", function() {
     cacheDomElements();
     addEventListeners();
@@ -16,39 +17,52 @@ function cacheDomElements() {
 function addEventListeners() {
     // "Find Nearby Stops" button queries database for stops near the current geolocation
     searchBtn.addEventListener("click", findNearbyStops);
+    stopList.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
+// Click Event Functions
 function findNearbyStops() {
+    console.log("clicked");
     geolocate.getCoordinates(position => {
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
         console.log(lat, lon);
 
-        queryStopsAtLocation(lat, lon);
+        // Query for nearby stops, then render
+        fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(stops => renderStops(stops))
     });
 }
 
-function queryStopsAtLocation(lat, lon) {
-    fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
+function getArrivalsAndDeparturesForStop(e) {
+    if(e.target === stopList) return;
+    
+    fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
-        .then(stops => renderStops(stops))
-}
+        .then(routes => renderRoutes(routes));
+} 
 
-
-
-function stopStopsInDatabase(response) {
-
-}
-
-
+// AJAX render functions
 function renderStops(stops) {
-    // console.log(stops); // Uncomment to view all the data available to a Stop in console
+    // console.log(stops);
+    if(stops.data === "") {
+        console.log("empty query");
+        return;
+    }
+    console.log(stops); // Uncomment to view all the data available to a Stop in console
     stops.forEach(stop => {
-        let el = document.createElement('li');
+        let li = document.createElement('li');
         let div = document.createElement('div');
-        el.appendChild(div);
-        stopList.appendChild(el);
+        
+        li.appendChild(div);
+        stopList.appendChild(li);
 
-        div.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
+        li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
+        li.setAttribute('id', stop.id);
     });
+}
+
+function renderRoutes(routes) {
+    console.log(routes);
 }
