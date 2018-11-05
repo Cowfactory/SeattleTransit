@@ -9,7 +9,7 @@ geolocate = (function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(cb, err, options);
         } else {
-            let location = document.getElementById("currentlocation");
+            let location = document.getElementById("currentlocation"); //A "#currentlocation" element must be present on index.ejs
             location.innerHTML = "Geolocation is not supported by this browser.";
         }
     };

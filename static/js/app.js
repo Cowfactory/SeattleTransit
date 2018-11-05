@@ -22,6 +22,8 @@ function findNearbyStops() {
     geolocate.getCoordinates(position => {
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
+        console.log(lat, lon);
+
         queryStopsAtLocation(lat, lon);
     });
 }
@@ -31,6 +33,13 @@ function queryStopsAtLocation(lat, lon) {
         .then(response => response.json())
         .then(stops => renderStops(stops))
 }
+
+
+
+function stopStopsInDatabase(response) {
+
+}
+
 
 function renderStops(stops) {
     // console.log(stops); // Uncomment to view all the data available to a Stop in console
