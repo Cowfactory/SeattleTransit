@@ -1,6 +1,7 @@
 var searchBtn;
 var stopList;
 var stopCoord = [];
+var stopName;
 
 document.addEventListener("DOMContentLoaded", function() {
     cacheDomElements();

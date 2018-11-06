@@ -28,6 +28,11 @@ const map = (() => {
     map.on('click', function () {
         let points = 0;
         stopCoord.forEach(stop => {
+            // START TEST
+            let section = $(`<section class='carousel-item'><h3>${stop}</h3></section>`);
+            $( section ).appendTo( $( '#carousel' ) );
+            console.log('Apending shit....');
+            // END TEST
             map.addLayer({
                 "id": `points ${points++}`,
                 "type": "symbol",
@@ -69,3 +74,9 @@ const map = (() => {
     }
     
 })();
+
+// START TEST
+$(document).ready(function(){
+    $('.carousel').carousel();
+  });
+// END TEST
