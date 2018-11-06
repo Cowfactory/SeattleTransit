@@ -3,6 +3,7 @@ const map = (() => {
 
     var map;
     var mb_geolocate;
+    var chapters = {};
 
     init();
 
@@ -70,24 +71,21 @@ const map = (() => {
     function renderBus() {
         let points = 0;
         let stopId = 0;
-        stopCoords.forEach(stop => {
-            // START TEST
-            let section = $(`<section class='carousel-item card active' id='stop ${stopId++}'><p>${stop}</p></section>`);
+        let chapterObj = {};
+
+        let carousel = $(`<div class='carousel center' id='carousel'></div>`);
+        $(carousel).appendTo($('.map-overlay'));
+
+        newStops.forEach(stop => {
+            let section = $(`<section class='carousel-item card' id='stop ${stopId++}'><p>${stop.name}</p></section>`);
             $(section).appendTo($('#carousel'));
-            $('#decoy').remove();
             M.AutoInit();
 
-            let chapters = {
-                'baker': {
-                    bearing: 27,
-                    center: [-0.15591514, 51.51830379],
-                    zoom: 15.5,
-                    pitch: 20
-                }
-            };
+            chapterObj.bearing = 90;
+            chapterObj.center = stop.coordinates;
+            chapterObj.zoom = 9;
+            chapters[stop.name] = chapterObj;
 
-            console.log('Apending shit....');
-            // END TEST
             map.addLayer({
                 "id": `points ${points++}`,
                 "type": "symbol",
@@ -99,7 +97,7 @@ const map = (() => {
                             "type": "Feature",
                             "geometry": {
                                 "type": "Point",
-                                "coordinates": stop
+                                "coordinates": stop.coordinates
                             },
                             "properties": {
                                 "icon": "bus"
@@ -112,16 +110,20 @@ const map = (() => {
                 }
             });
         });
+        $(".carousel").carousel({
+            onCycleTo: function(data) {
+                console.log(data);
+            }
+        });
+        return chapters;
     }
+
 
     return {
         getCoordinates // getCoordinates via harvesting mapBox's "user-dot's" position
     }
-    
-})();
+        
+    })();
 
 // START TEST
-$(document).ready(function(){
-    $('.carousel').carousel();
-  });
 // END TEST
