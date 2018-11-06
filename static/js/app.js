@@ -1,6 +1,7 @@
 var searchBtnEl;
 var stopListEl;
 var outputEl;
+var incomingBussesEl;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -71,14 +72,6 @@ function getArrivalsAndDeparturesForStop(e) {
         .then(routes => renderRoutes(routes));
 } 
 
-function incomingBussesForStop(e) {
-    if (e.target === incomingBussesEl) return;
-
-    fetch(`/api/stopDetails?stopname=${e.target.name}`)
-        .then(response => response.json())
-        .then(routes => renderRoutes(routes));
-}
-
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
@@ -103,20 +96,25 @@ function renderRoutes(routes) {
     console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
     // Removes all child nodes of stopList ul
-    while(stopListEl.firstChild) {
-        stopListEl.removeChild(stopListEl.firstChild);
+    while(incomingBussesEl.firstChild) {
+        incomingBussesEl.removeChild(incomingBussesEl.firstChild);
     }
-    let ul = document.createElement('ul');
-
+    // let ul = document.createElement('ul');
+    
+    // let div;
+    
     routes.forEach(route => { 
         // console.log(route);
-        let li = document.createElement('li');
-        li.textContent = `Bus: ${route.routeShortName} | Trip: ${route.tripHeadsign} | 
+        let div = document.createElement('div');
+        div.classList.add("card-panel");
+        div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> | Trip: ${route.tripHeadsign} | 
             Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;
-        ul.appendChild(li);
+            // ul.appendChild(div);
+        incomingBussesEl.appendChild(div);
     })
-    stopListEl.appendChild(ul);
-}
+
+        // stopListEl.appendChild(ul);
+    }
 
 function sideNav() {
     var elem = document.querySelector('.sidenav');
