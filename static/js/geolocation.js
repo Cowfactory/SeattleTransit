@@ -1,7 +1,7 @@
 geolocation = (function () {
     var options = {
         enableHighAccuracy: true,
-        timeout: 3000,
+        timeout: 1000,
         maximumAge: 0
     };
 
@@ -24,7 +24,7 @@ geolocation = (function () {
     }
 
     return {
-        getCoordinates
+        getCoordinates // (UNSTABLE) getCoordinates via user's browser's geolocation api
     }
 })();   
 

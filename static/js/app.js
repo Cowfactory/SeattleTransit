@@ -23,15 +23,22 @@ function addEventListeners() {
 
 // Click Event Functions
 function findNearbyStops() {
-    geolocation.getCoordinates(position => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
+    // Via browser geolocation api call (unstable)
+    // geolocation.getCoordinates(position => {
+    //     let lat = position.coords.latitude;
+    //     let lon = position.coords.longitude;
 
-        // Query for nearby stops, then render
-        fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
-            .then(response => response.json())
-            .then(stops => renderStops(stops));
-    });
+    //     // Query for nearby stops, then render
+    //     fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
+    //         .then(response => response.json())
+    //         .then(stops => renderStops(stops));
+    // });
+
+    pos = map.getCoordinates();
+    // Query for nearby stops, then render
+    fetch(`/api/stopsAtLocation?lat=${pos.lat}&lon=${pos.lon}`)
+        .then(response => response.json())
+        .then(stops => renderStops(stops));
 }
 
 function getArrivalsAndDeparturesForStop(e) {
@@ -45,10 +52,8 @@ function getArrivalsAndDeparturesForStop(e) {
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
-    if(stops.data === "") {
-        console.log("empty query");
-        return;
-    }
+    
+    // Add every stop to an li element in DOM
     stops.forEach(stop => {
         let li = document.createElement('li');
         stopListEl.appendChild(li);
@@ -61,6 +66,7 @@ function renderStops(stops) {
 
 function renderRoutes(routes) {
     console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+
     // Removes all child nodes of stopList ul
     while(stopListEl.firstChild) {
         stopListEl.removeChild(stopListEl.firstChild);

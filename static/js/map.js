@@ -2,12 +2,13 @@ const map = (() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3V0dGhpcmF0aCIsImEiOiJjam52ZTB0ZzUxZWt6M3Jwcjl2ZDdiODdqIn0.LfK0nDgbQ3mUWTgvAn0spQ';
 
     var map;
+    var mb_geolocate;
+
     init();
 
     function init() {
         geolocation.getCoordinates(
             (position) => { // Geolocation lookup success
-                console.log("Constructing custom map");
                 let lat = position.coords.latitude.toFixed(3);
                 let lon = position.coords.longitude.toFixed(3);
                 map = new mapboxgl.Map({
@@ -19,7 +20,7 @@ const map = (() => {
                 addMapCustomizations();
             },
             () => { // Geolocation lookup timeout or error
-                console.log("Constructing default map");
+                console.log("Using default map position");
                 map = new mapboxgl.Map({
                     container: 'map', 
                     style: 'mapbox://styles/mapbox/streets-v9',
@@ -34,7 +35,7 @@ const map = (() => {
 
     function addMapCustomizations() {
         // Add geolocate control to the map
-        const mb_geolocate = new mapboxgl.GeolocateControl({
+        mb_geolocate = new mapboxgl.GeolocateControl({
             positionOptions: {
                 enableHighAccuracy: true
             },
@@ -59,16 +60,14 @@ const map = (() => {
     }
 
     function getCoordinates() {
-        let gl = [];
-        let lat = map.transform._center.lat;
-        let lng = map.transform._center.lng;
-        gl.push(lat);
-        gl.push(lng);
-        return gl;
+        let pos = {};
+        pos.lat = mb_geolocate._userLocationDotMarker._lngLat.lat;
+        pos.lon = mb_geolocate._userLocationDotMarker._lngLat.lng;
+        return pos;
     }
 
     return {
-        getCoordinates
+        getCoordinates // getCoordinates via harvesting mapBox's "user-dot's" position
     }
     
 })();
