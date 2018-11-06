@@ -15,7 +15,8 @@ router.get('/stopsAtLocation', function(req, res, next) {
         params: {
             key: OBA_KEY,
             lat: req.query.lat,
-            lon: req.query.lon
+            lon: req.query.lon,
+            radius: 300
         }
         })
         .then(response => {

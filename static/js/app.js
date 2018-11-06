@@ -1,5 +1,6 @@
 var searchBtnEl;
 var stopListEl;
+var outputEl;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -13,6 +14,7 @@ function cacheDomElements() {
     searchBtnEl = document.getElementById("searchBtn");
     locationSetBtn = document.getElementById("locationSetBtn");
     stopListEl = document.getElementById("stopList");
+    outputEl = document.getElementById("out");
 };
 
 function addEventListeners() {
@@ -23,22 +25,41 @@ function addEventListeners() {
 
 // Click Event Functions
 function findNearbyStops() {
-    // Via browser geolocation api call (unstable)
-    // geolocation.getCoordinates(position => {
-    //     let lat = position.coords.latitude;
-    //     let lon = position.coords.longitude;
+    geolocation.getPosition(
+        function errCb(errMsg) {
+            // Use the last known lat and lon from sessionstorage instead
+            let lastKnownLat = sessionStorage.getItem('lastKnownLat');
+            let lastKnownLon = sessionStorage.getItem('lastKnownLon');
+            
+            //If we have a last known position: 
+            if(lastKnownLat && lastKnownLon) {
+                outputEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
+                    Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                fetchStopsFromApi(lastKnownLat, lastKnownLon);
+            } 
+            // Else Query Api for Stops near this last known position
+            else {
+                outputEl.innerHTML = `<p>${errMsg}`
+            }
+        },
+        function successCb(pos) {
+            // Save the latitude and longitude into local storage as 'lastKnownPos'
+            sessionStorage.setItem('lastKnownLat', pos.lat);
+            sessionStorage.setItem('lastKnownLon', pos.lon );
 
-    //     // Query for nearby stops, then render
-    //     fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
-    //         .then(response => response.json())
-    //         .then(stops => renderStops(stops));
-    // });
+            outputEl.innerHTML = `<p>Latitude is ${pos.lat}'° <br>Longitude is ${pos.lon}'°</p>`;
+            // Query Api for Stops near this position
+            fetchStopsFromApi(pos.lat, pos.lon);
+        }
+    );
 
-    pos = map.getCoordinates();
-    // Query for nearby stops, then render
-    fetch(`/api/stopsAtLocation?lat=${pos.lat}&lon=${pos.lon}`)
-        .then(response => response.json())
-        .then(stops => renderStops(stops));
+    function fetchStopsFromApi(lat, lon) {
+        fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(stops => renderStops(stops));
+    };
+
+    outputEl.innerHTML = "<p>Locating…</p>";
 }
 
 function getArrivalsAndDeparturesForStop(e) {
@@ -53,6 +74,11 @@ function getArrivalsAndDeparturesForStop(e) {
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     
+    // Removes all child nodes of stopList ul
+    while(stopListEl.firstChild) {
+        stopListEl.removeChild(stopListEl.firstChild);
+    }
+
     // Add every stop to an li element in DOM
     stops.forEach(stop => {
         let li = document.createElement('li');
