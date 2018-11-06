@@ -23,16 +23,14 @@ function addEventListeners() {
 
 // Click Event Functions
 function findNearbyStops() {
-    console.log("clicked");
-    geolocate.getCoordinates(position => {
+    geolocation.getCoordinates(position => {
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
-        console.log(lat, lon);
 
         // Query for nearby stops, then render
         fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
             .then(response => response.json())
-            .then(stops => renderStops(stops))
+            .then(stops => renderStops(stops));
     });
 }
 
@@ -46,18 +44,13 @@ function getArrivalsAndDeparturesForStop(e) {
 
 // AJAX render functions
 function renderStops(stops) {
-    // console.log(stops);
+    console.log(stops); // Uncomment to view all the data available to a Stop in console
     if(stops.data === "") {
         console.log("empty query");
         return;
     }
-    console.log(stops); // Uncomment to view all the data available to a Stop in console
     stops.forEach(stop => {
         let li = document.createElement('li');
-        let div = document.createElement('div');
-
-        // ul > li > div
-        li.appendChild(div);
         stopList.appendChild(li);
 
         li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
@@ -67,6 +60,7 @@ function renderStops(stops) {
 
 
 function renderRoutes(routes) {
+    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
     // Removes all child nodes of stopList ul
     while(stopList.firstChild) {
         stopList.removeChild(stopList.firstChild);
