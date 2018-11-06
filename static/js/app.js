@@ -13,6 +13,7 @@ function cacheDomElements() {
     searchBtnEl = document.getElementById("searchBtn");
     locationSetBtn = document.getElementById("locationSetBtn");
     stopListEl = document.getElementById("stopList");
+    incomingBussesEl = document.getElementById("incomingbusses")
 };
 
 function addEventListeners() {
@@ -49,6 +50,14 @@ function getArrivalsAndDeparturesForStop(e) {
         .then(routes => renderRoutes(routes));
 } 
 
+function incomingBussesForStop(e) {
+    if (e.target === incomingBussesEl) return;
+
+    fetch(`/api/stopDetails?stopname=${e.target.name}`)
+        .then(response => response.json())
+        .then(routes => renderRoutes(routes));
+}
+
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
@@ -74,7 +83,7 @@ function renderRoutes(routes) {
     let ul = document.createElement('ul');
 
     routes.forEach(route => { 
-        console.log(route);
+        // console.log(route);
         let li = document.createElement('li');
         li.textContent = `Bus: ${route.routeShortName} | Trip: ${route.tripHeadsign} | 
             Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;

@@ -51,3 +51,17 @@ i {
 #log{
     z-index: 9999999999 !important;
 }
+
+.incomingbusses {
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    bottom: 175px;
+    width: 100%;
+}
+.card-panel {
+    text-align: center;
+    width: 30vw;
+    border-radius: 30px;
+    align-content: center;
+}
