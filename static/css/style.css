@@ -37,3 +37,45 @@ html, body {
 }
 
 /* END TEST */
+
+.pillbutton {
+    background-color: #ffffff;
+    border: none;
+    color: black;
+    padding: 16px 6vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 8% 2px;
+    cursor: pointer;
+    border-radius: 28px;
+}
+.pillbutton:hover {
+    background-color: #f1f1f1;
+}
+.circle {
+    display: inline-block !important;
+}
+i {
+    padding: 0 10px 0 0;
+}
+
+.sidebar-userinfo {
+    height: 25vh;
+}
+/* .navbottom {
+    height: 10vh;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+} */
+.profile{
+    text-align: center;
+    padding:1em;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
+#log{
+    z-index: 9999999999 !important;
+}

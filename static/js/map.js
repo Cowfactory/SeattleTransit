@@ -27,10 +27,10 @@ const map = (() => {
     // Render bus stops on map
     map.on('click', function () {
         let points = 0;
-        stopCoord.forEach(stop => {
+        stopCoords.forEach(stop => {
             // START TEST
-            let section = $(`<section class='carousel-item'><h3>${stop}</h3></section>`);
-            $( section ).appendTo( $( '#carousel' ) );
+            let section = $(`<section class='carousel-item card'><h3>${stop}</h3></section>`);
+            $(section).appendTo($('#carousel'));
             console.log('Apending shit....');
             // END TEST
             map.addLayer({
