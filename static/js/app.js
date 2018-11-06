@@ -1,5 +1,5 @@
-var searchBtn;
-var stopList;
+var searchBtnEl;
+var stopListEl;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function cacheDomElements() {
     locationBtn = document.getElementById("locationBtn");
-    searchBtn = document.getElementById("searchBtn");
+    searchBtnEl = document.getElementById("searchBtn");
     locationSetBtn = document.getElementById("locationSetBtn");
-    stopList = document.getElementById("stopList");
+    stopListEl = document.getElementById("stopList");
 };
 
 function addEventListeners() {
     // "Find Nearby Stops" button queries database for stops near the current geolocation
-    searchBtn.addEventListener("click", findNearbyStops);
-    stopList.addEventListener("click", getArrivalsAndDeparturesForStop)
+    searchBtnEl.addEventListener("click", findNearbyStops);
+    stopListEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
 // Click Event Functions
@@ -35,7 +35,7 @@ function findNearbyStops() {
 }
 
 function getArrivalsAndDeparturesForStop(e) {
-    if(e.target === stopList) return;
+    if(e.target === stopListEl) return;
     
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
@@ -51,7 +51,7 @@ function renderStops(stops) {
     }
     stops.forEach(stop => {
         let li = document.createElement('li');
-        stopList.appendChild(li);
+        stopListEl.appendChild(li);
 
         li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
         li.setAttribute('id', stop.id);
@@ -62,8 +62,8 @@ function renderStops(stops) {
 function renderRoutes(routes) {
     console.log(routes); // Uncomment to view all the Routes available to a Stop in console
     // Removes all child nodes of stopList ul
-    while(stopList.firstChild) {
-        stopList.removeChild(stopList.firstChild);
+    while(stopListEl.firstChild) {
+        stopListEl.removeChild(stopListEl.firstChild);
     }
     let ul = document.createElement('ul');
 
@@ -73,7 +73,7 @@ function renderRoutes(routes) {
             Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;
         ul.appendChild(li);
     })
-    stopList.appendChild(ul);
+    stopListEl.appendChild(ul);
 }
 
 function sideNav() {
