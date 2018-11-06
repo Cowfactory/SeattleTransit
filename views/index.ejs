@@ -1,5 +1,18 @@
 <%- include ./partials/header.ejs %>
 
+<!-- Incoming Busses -->
+<div class="incomingbusses">
+    <%% renderStops() { %%>
+    <div class="row">
+        <div class="col s12 m5">
+            <div class="card-panel teal">
+                <span class="white-text">Let's display some busses here!</span>
+            </div>
+        </div>
+    </div>
+    <%% } %%>
+</div>
+
 <!-- Displaying Map -->
 <div id='map'></div>
 

@@ -74,6 +74,7 @@ function renderRoutes(routes) {
     let ul = document.createElement('ul');
 
     routes.forEach(route => { 
+        console.log(route);
         let li = document.createElement('li');
         li.textContent = `Bus: ${route.routeShortName} | Trip: ${route.tripHeadsign} | 
             Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;
