@@ -1,30 +1,34 @@
-geolocation = (function () {
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 1000,
-        maximumAge: 0
-    };
+geolocation = (() => {
+    function getPosition(err, cb) {
+        var timeout;
 
-    function getCoordinates(cb, err) {
-        if ("geolocation" in navigator) {
-            err ? // if err callback provided, use it 
-                navigator.geolocation.getCurrentPosition(cb, err, options) :
-                navigator.geolocation.getCurrentPosition(cb, defaultErr, options);
-            
-        } else {
-            console.log("Geolocation not available");
-            // A "#currentlocation" element must be present on index.ejs
-            // let location = document.getElementById("currentlocation"); 
-            // location.innerHTML = "Geolocation is not supported by this browser.";
+        if (!navigator.geolocation){
+            err('Geolocation is not supported by your browser');
         }
-    };
+      
+        function success(position) {
+            // Clear the timeout to stop the err callback 
+            clearTimeout(timeout);
 
-    function defaultErr(err) {
-        console.log('Houston...we have a problem. User did not allow the app to check for location', err);
-    }
-
+            var pos = {};
+            var latitude  = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            
+            pos.lat = latitude;
+            pos.lon = longitude;
+            
+            cb(pos); 
+        }
+        
+        function timeoutErr() {
+            err('Geolocation lookup timed out');
+        }
+        
+        timeout = setTimeout(timeoutErr, 3000);
+        navigator.geolocation.getCurrentPosition(success, err);
+    };    
+    
     return {
-        getCoordinates // (UNSTABLE) getCoordinates via user's browser's geolocation api
+        getPosition
     }
-})();   
-
+})();
