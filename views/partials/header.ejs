@@ -56,15 +56,18 @@
 <div id="slide-out" class="sidenav green">
     <div class="user-view sidebar-userinfo">
         <br>
-        <div class="background white valign-wrapper profile">
-            <div class="profile">
-                <% if (user) { %>
+        <div class="profile">
+            <% if (user) { %>
+                <div class="valign-wrapper">
                     <img src="<%= user.avatar %>" alt="" class="circle responsive-img">&nbsp;&nbsp;
                     <span class="card-title"><%= user.name %></span>
-                <% } else { %>
-                    <a href="/auth/google">Please Log In</a>
-                <% } %>
-            </div>
+                </div>
+            <% } else { %>
+                <!-- <button class ="pillbutton">Log In</button> -->
+                <!-- <a id="log" class="waves-effect pillbutton" href="/auth/google">Log In</a> -->
+            <% } %>
+        </div>
+        <div class="background blue valign-wrapper profile">
         </div>
     </div>
     <div class="center-align">
@@ -76,4 +79,7 @@
         <br>
         <button a href="#!" class="pillbutton"><i class="tiny material-icons">date_range</i>Schedules</button>
     </div>
+    <!-- <div class="page-footer">
+        <a class="btn" href="/logout"><i class="material-icons left">trending_flat</i>Log Out</a>
+    </div> -->
 </div>

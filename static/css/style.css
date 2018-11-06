@@ -35,10 +35,19 @@ i {
 .sidebar-userinfo {
     height: 25vh;
 }
+/* .navbottom {
+    height: 10vh;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+} */
 .profile{
     text-align: center;
     padding:1em;
     display: flex;
     align-items: center !important;
     justify-content: center !important;
+}
+#log{
+    z-index: 9999999999 !important;
 }
