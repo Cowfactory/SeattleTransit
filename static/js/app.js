@@ -107,8 +107,8 @@ function renderRoutes(routes) {
         // console.log(route);
         let div = document.createElement('div');
         div.classList.add("card-panel");
-        div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> | Trip: ${route.tripHeadsign} | 
-            Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;
+        div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> <h6>Trip: ${route.tripHeadsign}</h6> 
+            Distance from stop: ${route.distanceFromStop} <br> Schedule arrival time: ${route.scheduledArrivalTime}`;
             // ul.appendChild(div);
         incomingBussesEl.appendChild(div);
     })
