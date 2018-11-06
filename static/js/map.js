@@ -13,7 +13,7 @@ const map = (() => {
         positionOptions: {
             enableHighAccuracy: true
         },
-        trackUserLocation: true
+        trackUserLocation: true,
     }), 'top-right',);
 
     // User search input
@@ -27,10 +27,23 @@ const map = (() => {
     // Render bus stops on map
     map.on('click', function () {
         let points = 0;
+        let stopId = 0;
         stopCoords.forEach(stop => {
             // START TEST
-            let section = $(`<section class='carousel-item card'><h3>${stop}</h3></section>`);
+            let section = $(`<section class='carousel-item card active' id='stop ${stopId++}'><p>${stop}</p></section>`);
             $(section).appendTo($('#carousel'));
+            $('#decoy').remove();
+            M.AutoInit();
+
+            let chapters = {
+                'baker': {
+                    bearing: 27,
+                    center: [-0.15591514, 51.51830379],
+                    zoom: 15.5,
+                    pitch: 20
+                }
+            };
+
             console.log('Apending shit....');
             // END TEST
             map.addLayer({

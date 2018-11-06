@@ -34,6 +34,7 @@ html, body {
 
 .carousel-item {
     background-color: lightskyblue;
+    visibility: visible !important;
 }
 
 /* END TEST */

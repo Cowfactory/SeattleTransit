@@ -1,7 +1,6 @@
 var searchBtn;
 var stopList;
-var stopCoords = [];
-var stopName;
+var stops = [];
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -48,7 +47,8 @@ function getArrivalsAndDeparturesForStop(e) {
 
 // AJAX render functions
 function renderStops(stops) {
-    stopCoords = [];
+    stops = [];
+    let newStop = {};
     // console.log(stops);
     if(stops.data === "") {
         console.log("empty query");
@@ -61,6 +61,9 @@ function renderStops(stops) {
         li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
         li.setAttribute('id', stop.id);
         stopCoords.push([stop.lon, stop.lat]);
+        newStop.coordindates = stop.lon;
+        stop
+
     });
     return stopCoords;
 };
