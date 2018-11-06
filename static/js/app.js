@@ -54,7 +54,8 @@ function renderStops(stops) {
     stops.forEach(stop => {
         let li = document.createElement('li');
         let div = document.createElement('div');
-        
+
+        // ul > li > div
         li.appendChild(div);
         stopList.appendChild(li);
 
@@ -64,5 +65,17 @@ function renderStops(stops) {
 }
 
 function renderRoutes(routes) {
-    console.log(routes);
+    // Removes all child nodes of stopList ul
+    while(stopList.firstChild) {
+        stopList.removeChild(stopList.firstChild);
+    }
+    let ul = document.createElement('ul');
+
+    routes.forEach(route => { 
+        let li = document.createElement('li');
+        li.textContent = `Bus: ${route.routeShortName} | Trip: ${route.tripHeadsign} | 
+            Distance from stop: ${route.distanceFromStop} | Schedule arrival time: ${route.scheduledArrivalTime}`;
+        ul.appendChild(li);
+    })
+    stopList.appendChild(ul);
 }
