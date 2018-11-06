@@ -6,7 +6,7 @@ const stopSchema = new mongoose.Schema({
         required: true
     },
     stop_id: {
-        type: Number,
+        type: String,
         required: true
     },
     stop_lat: {
@@ -17,7 +17,9 @@ const stopSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    busroutes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BusRoute' }]    
+    stop_direction: String,
+    stop_routeIds: [{ type: String }],    
+    stop_routes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BusRoute' }]    
 }, {
     timestamps: true
 });
