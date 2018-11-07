@@ -7,7 +7,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
-const moment = require('moment');
 // const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 
 
@@ -40,7 +39,6 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(cors());
 app.use(cookieParser());
 
-moment().format();
 
 // Mount Session
 app.use(session({

@@ -3,6 +3,7 @@ var searchBtnEl;
 var outputEl;
 var incomingBussesEl;
 var carouselParentEl;
+var loadScreen;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -16,6 +17,7 @@ function cacheDomElements() {
     incomingBussesEl = document.getElementById("incomingbusses")
     outputEl = document.getElementById("locationStatus");
     carouselParentEl = document.getElementById("carouselParent");
+    loadScreen = document.getElementById("loadscreen");
 };
 
 function addEventListeners() {
@@ -23,6 +25,10 @@ function addEventListeners() {
     searchBtnEl.addEventListener("click", findNearbyStops);
     carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
+
+function hideLoadScreen() {
+    loadScreen.classList.add("hide");
+}
 
 // Click Events
 function findNearbyStops() {
