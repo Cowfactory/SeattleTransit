@@ -126,30 +126,9 @@ function renderRoutes(routes) {
 };
 
 function distanceFromStop(meters) {
-    let distance = (meters*3.2808).toFixed(2);
-    if (distance <= 528) {
-        return distance + " ft";
-    } else if(distance > 528 && distance <= 1056) {
-        return ".1 mi";
-    } else if(distance > 1056 && distance <= 1584) {
-        return ".2 mi";
-    } else if(distance > 1584 && distance <= 2112) {
-        return ".3 mi";
-    } else if(distance > 2112 && distance <= 2640) {
-        return ".4 mi";
-    } else if(distance > 2640 && distance <= 3168) {
-        return ".5 mi";
-    } else if(distance > 3168 && distance <= 3696) {
-        return ".6 mi";
-    } else if(distance > 3696 && distance <= 4224) {
-        return ".7 mi";
-    } else if(distance > 4224 && distance <= 4752) {
-        return ".8 mi";
-    } else if(distance > 4752 && distance <= 5280) {
-        return ".9 mi";
-    } else(distance > 5280); {
-        return "1 mi";
-    } 
+    let feet = (meters*3.2808);
+    let miles = (feet / 5280).toFixed(2) + " mi";
+    return miles;
 };
 
 function sideNav() {
