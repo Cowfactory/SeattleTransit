@@ -1,30 +1,42 @@
-geolocation = (function () {
+/*
+*  'geolocation' uses the browser's geolocation API to query the user's latitude and longitude 
+*
+*/
+const geolocation = (() => {
     var options = {
         enableHighAccuracy: true,
-        timeout: 1000,
-        maximumAge: 0
+        timeout: 3000, // Err callback is called after 3 seconds
+        maximumAge: 300000 // Positional data is cached for up to 5 minutes  
     };
 
-    function getCoordinates(cb, err) {
-        if ("geolocation" in navigator) {
-            err ? // if err callback provided, use it 
-                navigator.geolocation.getCurrentPosition(cb, err, options) :
-                navigator.geolocation.getCurrentPosition(cb, defaultErr, options);
-            
-        } else {
-            console.log("Geolocation not available");
-            // A "#currentlocation" element must be present on index.ejs
-            // let location = document.getElementById("currentlocation"); 
-            // location.innerHTML = "Geolocation is not supported by this browser.";
+    function getPosition(err, cb) {
+        if (!navigator.geolocation){
+            err('Geolocation is not supported by your browser');
         }
-    };
+      
+        function success(position) {
+            // Get the geolocation position data
+            var pos = {};
+            pos.lat = position.coords.latitude;
+            pos.lon = position.coords.longitude;
+            
+            // Save this latitude and Longitude into local storage
+            localStorage.setItem('lastKnownLat', pos.lat);
+            localStorage.setItem('lastKnownLon', pos.lon);
 
-    function defaultErr(err) {
-        console.log('Houston...we have a problem. User did not allow the app to check for location', err);
-    }
+            // Call the callback w/ the position data passed in
+            cb(pos); 
+        }
+        
+        function error() {
+            // Call the error callback w/ this error message passed
+            err("Geolocation lookup timed out");
+        }
 
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    };    
+    
     return {
-        getCoordinates // (UNSTABLE) getCoordinates via user's browser's geolocation api
+        getPosition
     }
-})();   
-
+})();

@@ -5,6 +5,7 @@ API_ENDPOINT = 'http://api.pugetsound.onebusaway.org/api/where'
 OBA_KEY = process.env.ONEBUSAWAY_APIKEY;
 STOPS_FOR_LOCATION = `${API_ENDPOINT}stops-for-location.json${OBA_KEY}`
 
+// Query OneBusAway API for all Bus Stops near a latitude and longitude
 router.get('/stopsAtLocation', function(req, res, next) {
     // If OneBusAway API fails to respond - return a 500 code
     setTimeout(function() {
@@ -15,7 +16,8 @@ router.get('/stopsAtLocation', function(req, res, next) {
         params: {
             key: OBA_KEY,
             lat: req.query.lat,
-            lon: req.query.lon
+            lon: req.query.lon,
+            radius: 300
         }
         })
         .then(response => {
@@ -27,6 +29,7 @@ router.get('/stopsAtLocation', function(req, res, next) {
         })
 });
 
+// Query OneBusAway API for the details of a particular Stop - including bus data 
 router.get('/stopDetails', function(req, res, next) {
     // If OneBusAway API fails to respond - return a 500 code
     setTimeout(function() {

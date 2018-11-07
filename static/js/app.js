@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 var searchBtn;
 var newStops = [];
+=======
+// DOM Elements
+>>>>>>> 871c1c1378deec5eeb26dde7360c9e940a356b59
 var searchBtnEl;
 var stopListEl;
+var outputEl;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -15,6 +20,7 @@ function cacheDomElements() {
     searchBtnEl = document.getElementById("searchBtn");
     locationSetBtn = document.getElementById("locationSetBtn");
     stopListEl = document.getElementById("stopList");
+    outputEl = document.getElementById("locationStatus");
 };
 
 function addEventListeners() {
@@ -23,24 +29,40 @@ function addEventListeners() {
     stopListEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
-// Click Event Functions
+// Click Events
 function findNearbyStops() {
-    // Via browser geolocation api call (unstable)
-    // geolocation.getCoordinates(position => {
-    //     let lat = position.coords.latitude;
-    //     let lon = position.coords.longitude;
+    geolocation.getPosition(
+        function errCb(errMsg) {
+            // Use the last known lat and lon from localStorage instead
+            let lastKnownLat = localStorage.getItem('lastKnownLat');
+            let lastKnownLon = localStorage.getItem('lastKnownLon');
+            console.log("Using local storage for lat and lon data");
 
-    //     // Query for nearby stops, then render
-    //     fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
-    //         .then(response => response.json())
-    //         .then(stops => renderStops(stops));
-    // });
+            //If we have a last known position: 
+            if(lastKnownLat && lastKnownLon) {
+                outputEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
+                    Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                fetchStopsFromApi(lastKnownLat, lastKnownLon);
+            } 
+            // Else failure
+            else {
+                outputEl.innerHTML = `<p>${errMsg}`
+            }
+        },
+        function successCb(pos) {
+            outputEl.innerHTML = `<p>Latitude is ${pos.lat}'° <br>Longitude is ${pos.lon}'°</p>`;
+            // Query Api for Stops near this position
+            fetchStopsFromApi(pos.lat, pos.lon);
+        }
+    );
 
-    pos = map.getCoordinates();
-    // Query for nearby stops, then render
-    fetch(`/api/stopsAtLocation?lat=${pos.lat}&lon=${pos.lon}`)
-        .then(response => response.json())
-        .then(stops => renderStops(stops));
+    function fetchStopsFromApi(lat, lon) {
+        fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(stops => renderStops(stops));
+    };
+
+    outputEl.innerHTML = "<p>Locating…</p>";
 }
 
 function getArrivalsAndDeparturesForStop(e) {
@@ -54,9 +76,19 @@ function getArrivalsAndDeparturesForStop(e) {
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
+<<<<<<< HEAD
     newStops = [];
 
     // Add every stop to an li element in DOM
+=======
+    
+    // Removes all child nodes of stopList ul
+    while(stopListEl.firstChild) {
+        stopListEl.removeChild(stopListEl.firstChild);
+    }
+
+    // Add every stop to the element in DOM
+>>>>>>> 871c1c1378deec5eeb26dde7360c9e940a356b59
     stops.forEach(stop => {
         stopObj = {};
 
@@ -70,9 +102,13 @@ function renderStops(stops) {
         stopObj.id = stop.id;
         newStops.push(stopObj);
     });
+<<<<<<< HEAD
     
     return newStops;
 };
+=======
+}
+>>>>>>> 871c1c1378deec5eeb26dde7360c9e940a356b59
 
 function renderRoutes(routes) {
     // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
@@ -81,8 +117,9 @@ function renderRoutes(routes) {
     while(stopListEl.firstChild) {
         stopListEl.removeChild(stopListEl.firstChild);
     }
-    let ul = document.createElement('ul');
 
+    // Add every Arrival And Departure "route" to the element in DOM
+    let ul = document.createElement('ul');
     routes.forEach(route => { 
         let li = document.createElement('li');
         li.textContent = `Bus: ${route.routeShortName} | Trip: ${route.tripHeadsign} | 
