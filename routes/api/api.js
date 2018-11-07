@@ -45,12 +45,15 @@ router.get('/stopDetails', function(req, res, next) {
         source.cancel('Request timed out');
     }, 5000);
 
+    // Get Data
     axios.get(`${API_ENDPOINT}/arrivals-and-departures-for-stop/${req.query.stopid}.json?key=${OBA_KEY}`,
         { cancelToken: source.token })
+    // Then send JSON to application
     .then(response => {
         arrivalsAndDepartures = response.data.data.entry.arrivalsAndDepartures;
         res.status(200).json(arrivalsAndDepartures);
     })
+    // If an error happens
     .catch(err => {
         if(axios.isCancel(err)) {
             console.log(`GET request to OneBusAway /arrivals-and-departures-for-stop failed, reason: ${err.message}`);
