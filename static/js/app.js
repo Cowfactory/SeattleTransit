@@ -1,6 +1,8 @@
 // DOM Elements
 var searchBtnEl;
-var outputEl;
+var searchMsgEl;
+var statusMsgEl;
+var statusCircleEl;
 var incomingBussesEl;
 var carouselParentEl;
 var loadScreen;
@@ -13,9 +15,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function cacheDomElements() {
+    searchMsgEl = document.getElementById("searchMsg");
     searchBtnEl = document.getElementById("searchBtn");
+    statusCircleEl = document.getElementById("statusCircle");
+    statusMsgEl = document.getElementById("statusMsg");
     incomingBussesEl = document.getElementById("incomingbusses")
-    outputEl = document.getElementById("locationStatus");
+
     carouselParentEl = document.getElementById("carouselParent");
     loadScreen = document.getElementById("loadscreen");
 };
@@ -32,6 +37,8 @@ function hideLoadScreen() {
 
 // Click Events
 function findNearbyStops() {
+    setStatusMsg('Getting location...');
+    toggleStatusVisibility();
     geolocation.getPosition(
         function errCb(errMsg) {
             // Use the last known lat and lon from localStorage instead
@@ -41,17 +48,19 @@ function findNearbyStops() {
 
             //If we have a last known position: 
             if(lastKnownLat && lastKnownLon) {
-                outputEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
-                    Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                // statusMsgEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
+                //     Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                setStatusMsg("Using last known location...")
                 fetchStopsFromApi(lastKnownLat, lastKnownLon);
             } 
             // Else failure
             else {
-                outputEl.innerHTML = `<p>${errMsg}`
+                console.log(`${errMsg}`);
+                setStatusMsg(`Please Try Again`);
             }
         },
         function successCb(pos) {
-            outputEl.innerHTML = `<p>Latitude is ${pos.lat}'° <br>Longitude is ${pos.lon}'°</p>`;
+            setStatusMsg('Fetching stops...');
             // Query Api for Stops near this position
             fetchStopsFromApi(pos.lat, pos.lon);
         }
@@ -60,10 +69,13 @@ function findNearbyStops() {
     function fetchStopsFromApi(lat, lon) {
         fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
             .then(response => response.json())
-            .then(stops => renderStops(stops));
+            .then(stops => renderStops(stops))
+            .then(() => {
+                setStatusMsg("");
+                toggleStatusVisibility();
+            });
     };
 
-    outputEl.innerHTML = "<p>Locating…</p>";
 }
 
 function getArrivalsAndDeparturesForStop(e) {
@@ -72,14 +84,27 @@ function getArrivalsAndDeparturesForStop(e) {
     console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
-        .then(routes => renderRoutes(routes));
+        .then(routes => renderRoutes(routes))
+        .then(() => {
+            setStatusMsg("");
+            toggleStatusVisibility();
+        });
 } 
+
+function toggleStatusVisibility() {
+    statusCircleEl.classList.toggle('hide');
+    statusMsgEl.classList.toggle('hide');
+    searchMsgEl.classList.toggle('hide');
+}
+function setStatusMsg(msg) {
+    statusMsgEl.textContent = msg;
+}
 
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
-    // $('carouselParent').empty();
+    $('#carouselParent').empty();
     // $('.carousel').destroy();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);

@@ -98,7 +98,7 @@ html, body {
 .profile {
     background-color: #50bec8;
 }
-
+/* Search button and Status Messages */
 #searchBtn {
     position: absolute;
     margin: auto;
@@ -110,7 +110,15 @@ html, body {
     background-color: #ccff8e;
     color: #50bec8;
 }
- 
+#statusCircle {
+    float: left;
+}
+#statusMsg {
+    position: absolute;
+    width: 10vw;
+    
+}
+
 .map-overlay-container {
     position: absolute;
     width: 25%;

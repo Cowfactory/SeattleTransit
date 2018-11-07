@@ -57,7 +57,7 @@ const map = (() => {
 
         // Trigger a geolocate on map startup
         map.on('load', function() {
-            hideLoadScreen();
+            // hideLoadScreen();
             mb_geolocate.trigger();
         })        
     }
@@ -66,7 +66,7 @@ const map = (() => {
         let location = {};
         let locationObj = {};
         locationObj.center = [stop.lon, stop.lat];
-        locationObj.zoom = 18;
+        locationObj.zoom = 16;
         location[stop.id] = locationObj;
         var sectionId = document.getElementsByClassName('active')[0].id;
         if (stop.id === sectionId) {
