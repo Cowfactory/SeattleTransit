@@ -73,8 +73,7 @@ function getArrivalsAndDeparturesForStop(e) {
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
-    // $('.carouselParent').empty();
-    // $('.carousel').destroy();
+    $('#carouselParent').empty();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
     $(carousel).appendTo($('.map-overlay'));
