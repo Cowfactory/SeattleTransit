@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     sideNav();
 });
 
+$(document).ready(function(){
+    $('#toggle').hide()
+});
+
 function cacheDomElements() {
     searchBtnEl = document.getElementById("searchBtn");
     incomingBussesEl = document.getElementById("incomingbusses")
@@ -69,7 +73,7 @@ function findNearbyStops() {
 function getArrivalsAndDeparturesForStop(e) {
     if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
-    console.log(e.target.id);
+    // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes));
@@ -79,8 +83,7 @@ function getArrivalsAndDeparturesForStop(e) {
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
-    // $('carouselParent').empty();
-    // $('.carousel').destroy();
+    $('#carouselParent').empty();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
     $(carousel).appendTo($('.map-overlay'));
@@ -98,7 +101,16 @@ function renderStops(stops) {
         onCycleTo: () => {
             const stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-        }
+    
+        $('.active').click(function(){
+            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+            $('#toggle').show( "slide", { direction: "up" }, "slow" );
+        }); 
+        $('#toggle').click(function(){
+            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+            $('.carousel').show( "slide", { direction: "down" }, "slow" );
+        });
+        }   
     })
 };
 
