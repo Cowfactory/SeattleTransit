@@ -111,11 +111,19 @@ function renderRoutes(routes) {
         let div = document.createElement('div');
         div.classList.add("card-panel");
         div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> <h6>Trip: ${route.tripHeadsign}</h6> 
-            Distance from stop: ${route.distanceFromStop} <br> Schedule arrival time: ${route.scheduledArrivalTime}`;
+            Distance from stop: ${distanceFromStop(route.distanceFromStop)} <br> Schedule arrival time: ${moment(route.scheduledArrivalTime).fromNow()}`;
             // ul.appendChild(div);
         incomingBussesEl.appendChild(div);
+        return route;
     })
-}
+    // stopListEl.appendChild(ul);
+};
+
+function distanceFromStop(meters) {
+    let feet = (meters*3.2808);
+    let miles = (feet / 5280).toFixed(2) + " mi";
+    return miles;
+};
 
 function sideNav() {
     var elem = document.querySelector('.sidenav');
@@ -126,4 +134,3 @@ function sideNav() {
     // var collapsibleElem = document.querySelector('.collapsible');
     // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
 };
-
