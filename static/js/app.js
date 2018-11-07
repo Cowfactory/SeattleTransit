@@ -108,7 +108,7 @@ function renderRoutes(routes) {
         let div = document.createElement('div');
         div.classList.add("card-panel");
         div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> <h6>Trip: ${route.tripHeadsign}</h6> 
-            Distance from stop: ${distanceFromStop()} <br> Schedule arrival time: ${moment(route.scheduledArrivalTime).fromNow()}`;
+            Distance from stop: ${distanceFromStop(route.distanceFromStop)} <br> Schedule arrival time: ${moment(route.scheduledArrivalTime).fromNow()}`;
             // ul.appendChild(div);
         incomingBussesEl.appendChild(div);
         return route;
@@ -117,7 +117,7 @@ function renderRoutes(routes) {
 };
 
 function distanceFromStop(meters) {
-    let distance = (route.distanceFromStop*3.2808).toFixed(2);
+    let distance = (meters*3.2808).toFixed(2);
     if (distance <= 528) {
         return distance + " ft";
     } else if(distance > 528 && distance <= 1056) {
