@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI);
 
 // database connection event
 mongoose.connection.once('open', function () {
