@@ -17,7 +17,7 @@ const map = (() => {
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [pos.lon, pos.lat], // starting position
-            zoom: 12 // starting zoom
+            zoom: 13 // starting zoom
         });
         addMapCustomizations();
     }
