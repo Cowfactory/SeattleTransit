@@ -27,33 +27,25 @@
     <title>Seattle Transit</title>
 </head>
 <body>
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper green">
-                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="large material-icons">menu</i></a>
-                <a href="/" class="brand-logo center">Seattle Transit</a>
-                <ul class="right">
-                    <li>
-                        <% if(user) { %>
-                        <a href="/logout">
-                            <i class="material-icons left">trending_flat</i>
-                            Log Out
-                        </a>
-                        <% } else { %>
-                        <a href="/auth/google">
-                            <i class="material-icons left">vpn_key</i>
-                            Log In
-                        </a>
-                        <% } %>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
+    <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i id="menu" class="large material-icons">menu</i></a>
+    <!-- <ul class="right">
+        <li>
+            <% if(user) { %>
+            <a href="/logout">
+                <i class="material-icons left">trending_flat</i>
+                Log Out
+            </a>
+            <% } else { %>
+            <a href="/auth/google">
+                <i class="material-icons left">vpn_key</i>
+                Log In
+            </a>
+            <% } %>
+        </li>
+    </ul> -->
 
 <!-- Sidenav -->  
-<div id="slide-out" class="sidenav green">
+<div id="slide-out" class="sidenav">
     <div class="user-view sidebar-userinfo">
         <br>
         <div class="profile">
@@ -67,7 +59,7 @@
                 <a id="log" class="waves-effect pillbutton" href="/auth/google">Log In</a>
             <% } %>
         </div>
-        <div class="background blue valign-wrapper profile">
+        <div class="background valign-wrapper profile">
         </div>
     </div>
     <div class="center-align">
