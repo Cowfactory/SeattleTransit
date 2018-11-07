@@ -63,7 +63,7 @@ function findNearbyStops() {
 function getArrivalsAndDeparturesForStop(e) {
     if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
-    console.log(e.target.id);
+    // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes));
@@ -73,7 +73,7 @@ function getArrivalsAndDeparturesForStop(e) {
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
-    // $('carouselParent').empty();
+    // $('.carouselParent').empty();
     // $('.carousel').destroy();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
