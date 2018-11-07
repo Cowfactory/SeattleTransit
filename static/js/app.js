@@ -1,9 +1,9 @@
 // DOM Elements
-// var newStops = [];
 var searchBtnEl;
 var outputEl;
 var incomingBussesEl;
 var carouselParentEl;
+var loadScreen;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -17,6 +17,7 @@ function cacheDomElements() {
     incomingBussesEl = document.getElementById("incomingbusses")
     outputEl = document.getElementById("locationStatus");
     carouselParentEl = document.getElementById("carouselParent");
+    loadScreen = document.getElementById("loadscreen");
 };
 
 function addEventListeners() {
@@ -24,6 +25,10 @@ function addEventListeners() {
     searchBtnEl.addEventListener("click", findNearbyStops);
     carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
+
+function hideLoadScreen() {
+    loadScreen.classList.add("hide");
+}
 
 // Click Events
 function findNearbyStops() {
@@ -75,7 +80,6 @@ function getArrivalsAndDeparturesForStop(e) {
 // AJAX render functions
 function renderStops(stops) {
     // console.log(stops); // Uncomment to view all the data available to a Stop in console
-    console.log("in render stops");
     // Removes carousel
     // $('carouselParent').empty();
     $('.carousel').carousel('destroy');
@@ -96,7 +100,6 @@ function renderStops(stops) {
 function renderRoutes(routes) {
     console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
-    console.log("in render routes");
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);

@@ -1,5 +1,10 @@
 <%- include ./partials/header.ejs %>
 
+<div id="loadscreen">
+    <img src="/img/SeattleTransitLogo.svg" alt="Seattle Transit Logo">
+    <h1>Know exactly <br><i>when</i><br> you're going</h1>
+</div>
+
 <!-- Incoming Busses -->
 <div class="incomingbusses">
     
@@ -24,13 +29,11 @@
 </div>
 
 <!-- Button to get current location -->
-<div class="center">
+<!-- <div class="center">
     <h4>Find nearby stops:</h4>
-    <!-- Button to get current location -->
     <button class="btn white-text blue" id="searchBtn">Find Nearby Stops</button>
-    <!-- Shows the status of the geolocation lookup -->
     <div id="locationStatus"></div>
-</div>
+</div> -->
 <hr>
 
 <script src="/js/geolocation.js" defer></script>

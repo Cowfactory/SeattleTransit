@@ -17,7 +17,7 @@ const map = (() => {
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [pos.lon, pos.lat], // starting position
-            zoom: 14 // starting zoom
+            zoom: 12 // starting zoom
         });
         addMapCustomizations();
     }
@@ -57,6 +57,7 @@ const map = (() => {
 
         // Trigger a geolocate on map startup
         map.on('load', function() {
+            // hideLoadScreen();
             mb_geolocate.trigger();
         })        
         // map.on('click', renderBus);
