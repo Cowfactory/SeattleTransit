@@ -1,9 +1,9 @@
 // DOM Elements
-var newStops = [];
+// var newStops = [];
 var searchBtnEl;
-var stopListEl;
 var outputEl;
 var incomingBussesEl;
+var carouselParentEl;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -13,19 +13,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function cacheDomElements() {
-    locationBtn = document.getElementById("locationBtn");
     searchBtnEl = document.getElementById("searchBtn");
-    locationSetBtn = document.getElementById("locationSetBtn");
-    stopListEl = document.getElementById("stopList");
     incomingBussesEl = document.getElementById("incomingbusses")
     outputEl = document.getElementById("locationStatus");
-
+    carouselParentEl = document.getElementById("carouselParent");
 };
 
 function addEventListeners() {
     // "Find Nearby Stops" button queries database for stops near the current geolocation
     searchBtnEl.addEventListener("click", findNearbyStops);
-    stopListEl.addEventListener("click", getArrivalsAndDeparturesForStop)
+    carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
 // Click Events
@@ -65,8 +62,11 @@ function findNearbyStops() {
 }
 
 function getArrivalsAndDeparturesForStop(e) {
-    if(e.target === stopListEl) return;
-    
+    if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
+    console.log("click!");
+    // console.log(e);
+
+    console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes));
@@ -74,42 +74,33 @@ function getArrivalsAndDeparturesForStop(e) {
 
 // AJAX render functions
 function renderStops(stops) {
-    console.log(stops); // Uncomment to view all the data available to a Stop in console
-    newStops = [];
+    // console.log(stops); // Uncomment to view all the data available to a Stop in console
+    console.log("in render stops");
+    // Removes carousel
+    // $('carouselParent').empty();
+    $('.carousel').carousel('destroy');
 
-    // Add every stop to an li element in DOM
-    
-    // Removes all child nodes of stopList ul
-    while(stopListEl.firstChild) {
-        stopListEl.removeChild(stopListEl.firstChild);
-    }
+    let carousel = $(`<div class='carousel center' id='carousel'></div>`);
+    $(carousel).appendTo($('.map-overlay'));
 
     // Add every stop to the element in DOM
     stops.forEach(stop => {
-        stopObj = {};
-
-        let li = document.createElement('li');
-        stopListEl.appendChild(li);
-
-        li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
-        li.setAttribute('id', stop.id);
-        stopObj.coordinates = [stop.lon, stop.lat];
-        stopObj.name = stop.name;
-        stopObj.id = stop.id;
-        newStops.push(stopObj);
+        let section = $(`<section class='carousel-item card' id='${stop.id}'><p>${stop.name}</p></section>`);
+        $(section).appendTo($('#carousel'));
+        map.addStopToMap(stop);
+        M.AutoInit();    
     });
-    
-    return newStops;
 };
 
-function renderRoutes(routes) {
-    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
+function renderRoutes(routes) {
+    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+
+    console.log("in render routes");
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);
     }
-
 
     // Add every Arrival And Departure "route" to the element in DOM
     routes.forEach(route => { 
@@ -121,9 +112,7 @@ function renderRoutes(routes) {
             // ul.appendChild(div);
         incomingBussesEl.appendChild(div);
     })
-
-        // stopListEl.appendChild(ul);
-    }
+}
 
 function sideNav() {
     var elem = document.querySelector('.sidenav');
