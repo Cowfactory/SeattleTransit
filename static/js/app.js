@@ -1,4 +1,5 @@
 // DOM Elements
+var newStops = [];
 var searchBtnEl;
 var stopListEl;
 var outputEl;
@@ -74,6 +75,9 @@ function getArrivalsAndDeparturesForStop(e) {
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
+    newStops = [];
+
+    // Add every stop to an li element in DOM
     
     // Removes all child nodes of stopList ul
     while(stopListEl.firstChild) {
@@ -82,16 +86,24 @@ function renderStops(stops) {
 
     // Add every stop to the element in DOM
     stops.forEach(stop => {
+        stopObj = {};
+
         let li = document.createElement('li');
         stopListEl.appendChild(li);
 
         li.textContent = `${stop.name} ${stop.direction ? `(${stop.direction})` : ""}`; 
         li.setAttribute('id', stop.id);
+        stopObj.coordinates = [stop.lon, stop.lat];
+        stopObj.name = stop.name;
+        stopObj.id = stop.id;
+        newStops.push(stopObj);
     });
-}
+    
+    return newStops;
+};
 
 function renderRoutes(routes) {
-    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {

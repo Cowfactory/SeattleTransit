@@ -5,7 +5,8 @@
 const map = (() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3V0dGhpcmF0aCIsImEiOiJjam52ZTB0ZzUxZWt6M3Jwcjl2ZDdiODdqIn0.LfK0nDgbQ3mUWTgvAn0spQ';
 
-    var map; // The mapbox object
+    var map;
+    var chapters = {};
 
     init(); // Create the map object
 
@@ -54,14 +55,15 @@ const map = (() => {
                 accessToken: mapboxgl.accessToken,
                 country: 'us',
             }), 'top-left'); 
-    
+
             // Map display controls
             map.addControl(new mapboxgl.NavigationControl());   
-    
+
             // Trigger a geolocate on map startup
             map.on('load', function() {
                 mb_geolocate.trigger();
             })        
+            map.on('click', renderBus);
         }
     };
 
@@ -73,8 +75,53 @@ const map = (() => {
         return pos;
     }
 
-    return {
-        getDotPosition // via harvesting mapBox's "user-dot's" position
+    function renderBus() {
+        let points = 0;
+        let stopId = 0;
+        let chapterObj = {};
+
+        let carousel = $(`<div class='carousel center' id='carousel'></div>`);
+        $(carousel).appendTo($('.map-overlay'));
+
+        newStops.forEach(stop => {
+            let section = $(`<section class='carousel-item card' id='stop ${stopId++}'><p>${stop.name}</p></section>`);
+            $(section).appendTo($('#carousel'));
+            M.AutoInit();
+
+            chapterObj.bearing = 90;
+            chapterObj.center = stop.coordinates;
+            chapterObj.zoom = 9;
+            chapters[stop.name] = chapterObj;
+
+            map.addLayer({
+                "id": `points ${points++}`,
+                "type": "symbol",
+                "source": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features": [{
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": stop.coordinates
+                            },
+                            "properties": {
+                                "icon": "bus"
+                            }
+                        }]
+                    }
+                },
+                "layout": {
+                    "icon-image": "{icon}-15"
+                }
+            });
+        });
+        $(".carousel").carousel({
+            onCycleTo: function(data) {
+                console.log(data);
+            }
+        });
+        return chapters;
     }
-    
 })();
