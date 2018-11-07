@@ -1,5 +1,4 @@
 // DOM Elements
-// var newStops = [];
 var searchBtnEl;
 var outputEl;
 var incomingBussesEl;
@@ -63,9 +62,7 @@ function findNearbyStops() {
 
 function getArrivalsAndDeparturesForStop(e) {
     if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
-    console.log("click!");
     // console.log(e);
-
     console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
@@ -74,29 +71,35 @@ function getArrivalsAndDeparturesForStop(e) {
 
 // AJAX render functions
 function renderStops(stops) {
-    // console.log(stops); // Uncomment to view all the data available to a Stop in console
-    console.log("in render stops");
+    console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
     // $('carouselParent').empty();
-    $('.carousel').carousel('destroy');
+    // $('.carousel').destroy();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
     $(carousel).appendTo($('.map-overlay'));
-
     // Add every stop to the element in DOM
+    const stopMap = {}
     stops.forEach(stop => {
-        let section = $(`<section class='carousel-item card' id='${stop.id}'><p>${stop.name}</p></section>`);
+        let section = $(`<section class='carousel-item card' id=${stop.id}><p>${stop.name}</p></section>`);
         $(section).appendTo($('#carousel'));
+        M.AutoInit();
         map.addStopToMap(stop);
-        M.AutoInit();    
+        map.flyToStop(stop);
+        stopMap[stop.id] = stop
     });
+    $('.carousel').carousel({
+        onCycleTo: () => {
+            const stopId = document.getElementsByClassName('active')[0].id;
+            map.flyToStop(stopMap[stopId]);
+        }
+    })
 };
 
 
 function renderRoutes(routes) {
-    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
-    console.log("in render routes");
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);

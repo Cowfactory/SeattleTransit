@@ -46,11 +46,11 @@ const map = (() => {
         });
         map.addControl(mb_geolocate, 'top-right');
         
-        // // User search input - Reimplement in MVP 2
+        // User search input - Reimplement in MVP 2
         // map.addControl(new MapboxGeocoder({
         //     accessToken: mapboxgl.accessToken,
         //     country: 'us',
-        // }), 'top-left'); 
+        // })); 
 
         // Map display controls
         map.addControl(new mapboxgl.NavigationControl());   
@@ -59,9 +59,19 @@ const map = (() => {
         map.on('load', function() {
             mb_geolocate.trigger();
         })        
-        // map.on('click', renderBus);
     }
 
+    function flyToStop(stop) {
+        let location = {};
+        let locationObj = {};
+        locationObj.center = [stop.lon, stop.lat];
+        locationObj.zoom = 18;
+        location[stop.id] = locationObj;
+        var sectionId = document.getElementsByClassName('active')[0].id;
+        if (stop.id === sectionId) {
+            map.flyTo(locationObj);
+        }
+    }
 
     function addStopToMap(stop) {
         // console.log(stop);
@@ -94,6 +104,7 @@ const map = (() => {
     }
     
     return {
-        addStopToMap
+        addStopToMap,
+        flyToStop
     }
 })();
