@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     sideNav();
 });
 
+$(document).ready(function(){
+    $('#toggle').hide()
+});
+
 function cacheDomElements() {
     searchBtnEl = document.getElementById("searchBtn");
     incomingBussesEl = document.getElementById("incomingbusses")
@@ -97,7 +101,16 @@ function renderStops(stops) {
         onCycleTo: () => {
             const stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-        }
+    
+        $('.active').click(function(){
+            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+            $('#toggle').show( "slide", { direction: "up" }, "slow" );
+        }); 
+        $('#toggle').click(function(){
+            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+            $('.carousel').show( "slide", { direction: "down" }, "slow" );
+        });
+        }   
     })
 };
 

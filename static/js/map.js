@@ -76,8 +76,11 @@ const map = (() => {
 
     function addStopToMap(stop) {
         // console.log(stop);
-        // map.removeSource(stop.id);
-        // map.removelayer();
+
+        if (map.getSource(stop.id) && map.getLayer(stop.id)){
+            map.removeLayer(stop.id);
+            map.removeSource(stop.id);
+        }
 
         let coords = [];
         coords.push(stop.lon);
