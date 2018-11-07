@@ -80,3 +80,23 @@ i {
 #log{
     z-index: 9999999999 !important;
 }
+
+.incomingbusses {
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    bottom: 155px;
+    width: 100%;
+    height: 66%;
+    overflow: auto;
+}
+.card-panel {
+    text-align: center;
+    overflow: auto;
+    width: 30vw;
+    min-width: 270px;
+    max-height: 50vh;
+    border-radius: 30px;
+    align-content: center;
+    padding: 0px 8px 11px !important;
+}
