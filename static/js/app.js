@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
     configureMomentJs();
 });
 
+$(document).ready(function() {
+    $('#toggle').hide();
+    $('#incomingbusses').hide();
+})
+
 function cacheDomElements() {
     searchMsgEl = document.getElementById("searchMsg");
     searchBtnEl = document.getElementById("searchBtn");

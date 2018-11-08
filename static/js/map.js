@@ -109,7 +109,7 @@ const map = (() => {
             }
         });
     }
-    
+
     return {
         addStopToMap,
         flyToStop
