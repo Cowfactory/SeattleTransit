@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", function() {
     sideNav();
 });
 
-$(document).ready(function(){
-    $('#toggle').hide()
-});
+// $(document).ready(function(){
+//     $('#toggle').hide()
+// });
 
 function cacheDomElements() {
     searchMsgEl = document.getElementById("searchMsg");
@@ -35,12 +35,13 @@ function addEventListeners() {
     carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
-function hideLoadScreen() {
-    loadScreen.classList.add("hide");
+function removeLoadScreen() {
+    loadScreen.parentNode.removeChild(loadScreen);
 }
 
 // Click Events
 function findNearbyStops() {
+    console.log("click!");
     setStatusMsg('Getting location...');
     toggleStatusVisibility();
     geolocation.getPosition(
@@ -122,26 +123,26 @@ function renderStops(stops) {
         map.flyToStop(stop);
         stopMap[stop.id] = stop
     });
-    $('.carousel').carousel({
-        onCycleTo: () => {
-            const stopId = document.getElementsByClassName('active')[0].id;
-            map.flyToStop(stopMap[stopId]);
+    // $('.carousel').carousel({
+    //     onCycleTo: () => {
+    //         const stopId = document.getElementsByClassName('active')[0].id;
+    //         map.flyToStop(stopMap[stopId]);
     
-        $('.active').click(function(){
-            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
-            $('#toggle').show( "slide", { direction: "up" }, "slow" );
-        }); 
-        $('#toggle').click(function(){
-            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
-            $('.carousel').show( "slide", { direction: "down" }, "slow" );
-        });
-        }   
-    })
+    //     $('.active').click(function(){
+    //         $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+    //         $('#toggle').show( "slide", { direction: "up" }, "slow" );
+    //     }); 
+    //     $('#toggle').click(function(){
+    //         $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+    //         $('.carousel').show( "slide", { direction: "down" }, "slow" );
+    //     });
+    //     }   
+    // })
 };
 
 
 function renderRoutes(routes) {
-    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
@@ -172,8 +173,4 @@ function sideNav() {
     var elem = document.querySelector('.sidenav');
     var instance = new M.Sidenav(elem);
     var collapsibleElem = document.querySelector('.collapsible');
-    // var collapsibleInstance = new M.Collapsible(collapsibleElem);
-    // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
-    // var collapsibleElem = document.querySelector('.collapsible');
-    // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
 };

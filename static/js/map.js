@@ -57,7 +57,7 @@ const map = (() => {
 
         // Trigger a geolocate on map startup
         map.on('load', function() {
-            // hideLoadScreen();
+            removeLoadScreen();
             mb_geolocate.trigger();
         })        
     }

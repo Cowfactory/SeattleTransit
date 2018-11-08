@@ -13,7 +13,7 @@ router.get('/stopsAtLocation', function(req, res, next) {
     // If OneBusAway API fails to respond - return a 500 code
     setTimeout(function() {
         source.cancel('Request timed out');
-    }, 5000);
+    }, 20000); //Responses up to 20 seconds late are acceptable
 
     axios.get(`${API_ENDPOINT}/stops-for-location.json`, {
         params: {
@@ -43,7 +43,7 @@ router.get('/stopDetails', function(req, res, next) {
     // If OneBusAway API fails to respond - return a 500 code
     setTimeout(function() {
         source.cancel('Request timed out');
-    }, 5000);
+    }, 20000);
 
     // Get Data
     axios.get(`${API_ENDPOINT}/arrivals-and-departures-for-stop/${req.query.stopid}.json?key=${OBA_KEY}`,
