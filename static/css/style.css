@@ -243,7 +243,9 @@ i {
     background-color: #ccff8e;
     text-align: center;
     padding: 0 !important;
-    display: flex;
+    /* display: grid;
+    grid-template-rows: 25% auto;
+    grid-template-columns: 25% auto 25%; */
 }
 #incomingbusses div{
     margin: 1%;
@@ -254,13 +256,13 @@ i {
 #incomingbusses {
     position: absolute;
     top: 139px;
-    width: 95%;
+    width: 100%;
     overflow: auto;
     height: 62vh;
     z-index: 1;
 }
 .tripheadsign {
-
+    width: 100%;
 }
 .routeshortname {
     flex-basis: 15%;

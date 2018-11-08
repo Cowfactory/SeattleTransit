@@ -134,9 +134,11 @@ function setupCarousel(stopMap) {
         $('.active').click(function(){
             $('.carousel').hide( "slide", { direction: "down" }, "slow" );
             $('#toggle').show( "slide", { direction: "up" }, "slow" );
+            $('#incomingbusses').show( "slide", { direction: "up" }, "slow")
         }); 
         $('#toggle').click(function(){
             $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+            $('#incomingbusses').hide( "slide", { direction: "up" }, "slow" );
             $('.carousel').show( "slide", { direction: "down" }, "slow" );
         });
         }   
