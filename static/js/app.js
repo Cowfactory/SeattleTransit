@@ -74,8 +74,8 @@ function findNearbyStops() {
             .then(response => response.json())
             .then(stops => renderStops(stops))
             .then(() => {
-                // setStatusMsg("");
-                // toggleStatusVisibility();
+                setStatusMsg("");
+                toggleStatusVisibility();
             });
     };
 
