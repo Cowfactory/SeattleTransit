@@ -87,6 +87,7 @@ function findNearbyStops() {
 function getArrivalsAndDeparturesForStop(e) {
     if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
+    console.log(e.target);
     // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())

@@ -46,6 +46,7 @@ router.get('/stopDetails', function(req, res, next) {
     // }, 20000);
 
     // Get Data
+    console.log(req.query.stopid);
     axios.get(`${API_ENDPOINT}/arrivals-and-departures-for-stop/${req.query.stopid}.json?key=${OBA_KEY}`)//,
         // { cancelToken: source.token })
     // Then send JSON to application
