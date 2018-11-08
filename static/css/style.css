@@ -87,6 +87,7 @@ html, body {
 .mapboxgl-ctrl-group > button {
     width: 40px;
     height:40px;
+    background-color: #ccff8e;
 }
 
 #menu {
@@ -108,13 +109,18 @@ html, body {
     background-color: #50bec8;
 }
 /* Search button and Status Messages */
+.btnCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #searchBtn {
     position: absolute;
-    margin: auto;
     z-index: 1;
     top: 89.7vh;
     border-radius: 50px;
-    width: 100vw;
+    width: 60vw;
     height: 6vh;
     background-color: #ccff8e;
     color: #50bec8;
@@ -148,9 +154,8 @@ html, body {
 }
 
 .carousel {
-    height: 200px;
-    margin:0;
-    padding: 0;
+    height: 300px;
+    bottom: 5vh;
 }
 
 .carousel-item {

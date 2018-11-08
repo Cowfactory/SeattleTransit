@@ -24,28 +24,30 @@
 </div>
 
 <!-- Toggle button for carousel -->
-<div id='toggle' class="hide">^</div>
+<div id='toggle'>^</div>
 
 <!-- Button to get current location -->
-<button class="btn valign-wrapper" id="searchBtn">
-    <div class="">
-        <div id="statusCircle" class="hide">
-            <div class="preloader-wrapper small active">
-                <div class="spinner-layer spinner-green-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
+<div class="btnCenter">
+    <button class="btn valign-wrapper waves-effect waves-teal" id="searchBtn">
+        <div class="">
+            <div id="statusCircle" class="hide">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div id="statusMsg" class="hide center-align"></div>
+            <div id="searchMsg" class="center-align">Search For Stops</div>
         </div>
-        <div id="statusMsg" class="hide center-align"></div>
-        <div id="searchMsg" class="center-align">Search For Stops</div>
-    </div>
-</button>
+    </button>
+</div>
 
 <script src="/js/geolocation.js" defer></script>
 <script src="/js/map.js" defer></script>
