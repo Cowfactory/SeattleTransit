@@ -24,28 +24,34 @@
 </div>
 
 <!-- Toggle button for carousel -->
-<div id='toggle'>^</div>
+<div class="toggleCenter center">
+    <div id='toggle'>^</div>
+</div>
 
 <!-- Button to get current location -->
 <div class="btnCenter">
-    <button class="btn valign-wrapper waves-effect waves-teal" id="searchBtn">
-        <div class="">
-            <div id="statusCircle" class="hide">
-                <div class="preloader-wrapper small active">
-                    <div class="spinner-layer spinner-green-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
+    <button class="btn align-wrapper waves-effect waves-teal" id="searchBtn">
+        <ul>
+            <li class="left">
+                <div id="statusCircle" class="hide">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="statusMsg" class="hide center-align"></div>
+            </li>
+            <li class="right">
+                <div id="statusMsg" class="hide center valign-wrapper"></div>
+            </li>
             <div id="searchMsg" class="center-align">Search For Stops</div>
-        </div>
+        </ul>
     </button>
 </div>
 

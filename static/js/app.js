@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 $(document).ready(function() {
     $('#toggle').hide();
+    $('#incomingbusses').hide();
 })
 
 function cacheDomElements() {
