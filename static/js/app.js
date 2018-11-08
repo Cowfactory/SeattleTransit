@@ -169,11 +169,9 @@ function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, 
             <div class="tripheadsign">
                 <div><h5>${tripHeadsign}</h5></div>
             </div>
-            <div class="row">
-                <div class="routeshortname"><h4>${routeShortName}</h4></div>
-                <div class="distancefromstop"><h6>${convertMetersToMiles(distanceFromStop)}</h6></div>
-                <div class="scheduledarrivaltime"><h4>${moment(scheduledArrivalTime).fromNow()}</h4></div>
-            </div>
+            <div class="routeshortname"><h4>${routeShortName}</h4></div>
+            <div class="distancefromstop"><h6>${convertMetersToMiles(distanceFromStop)}</h6></div>
+            <div class="scheduledarrivaltime"><h4>${moment(scheduledArrivalTime).fromNow()}</h4></div>
     `;
 }
 
