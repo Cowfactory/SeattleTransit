@@ -225,44 +225,63 @@ i {
     z-index: 9999999999 !important;
 }
 
-/* .buscontainer {
-    top: 5vh;
-    width: 100%;
-    padding: 0 2em;
-} */
-/* .buscontainer .card-panel {
-    width: 95%; 
-    align-items: center;
-} */
-/* .card-panel {
-    text-align: center;
-    width: 40vw;
-    min-width: 270px;
-    max-height: 50vh;
-    display: flex; 
-} */
-
 .incomingbuscard {
     align-content: center;
-    background-color: #ccff8e;
+    background-color: #50bec8;
     text-align: center;
     padding: 0 !important;
-    display: flex;
+    display: grid;
+    grid-template-rows: .25fr .75fr;
+    grid-template-columns: .25fr .50fr .25fr;
+    grid-template-areas:    "tripheadsign tripheadsign tripheadsign"
+                            "routeshortname scheduledarrivaltime distancefromstop";
 }
 #incomingbusses div{
-    margin: 1%;
+    margin: 0 0 1% 0;
     padding: 0 !important;
     border-radius: 40px;
 }
-
 #incomingbusses {
     position: absolute;
     top: 139px;
-    width: 95%;
+    width: 100%;
     overflow: auto;
     height: 62vh;
     z-index: 1;
 }
-.row {
-    margin: auto;
+.tripheadsign {
+    grid-area: tripheadsign;
+} 
+.routeshortname {
+    grid-area: routeshortname;
+    margin: 0;
+    border-radius: 0 0 0 40px !important;
+}
+.scheduledarrivaltime {
+    grid-area: scheduledarrivaltime;
+    margin: 0;
+    border-radius: 0 !important;
+}
+.distancefromstop {
+    grid-area: distancefromstop;
+    margin: 0;
+    border-radius: 0 0 40px 0 !important;
+}
+.tripheadsign :first-child,.scheduledarrivaltime :first-child,.distancefromstop :first-child,.routeshortname :first-child {
+    line-height: 0.3em;
+}
+.tripheadsign:first-child {
+    color: white;
+    font-style: oblique;
+}
+.tripheadsign h5 {
+    font-weight: 800;
+}
+.routeshortname,.scheduledarrivaltime,.distancefromstop {
+    background: #8be8f1;
+    /* border: #ccff8e 2px solid; */
+    box-sizing: border-box;
+}
+#incomingbusses h5 {
+    padding: 3% 0 2% 0 !important;
 }

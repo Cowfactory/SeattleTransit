@@ -219,17 +219,14 @@ function renderRoutes(routes) {
 
 function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
     // console.log({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop});
+    // console.log('here')
     return `
-            <div class="row">
-                <div class="tripheadsign">
-                    <h5>${tripHeadsign}</h5>
-                </div>
+            <div class="tripheadsign">
+                <div><h5>${tripHeadsign}</h5></div>
             </div>
-            <div class="row">
-                <div class=""><h4>${routeShortName}</h4></div>
-                <div class="">${moment(scheduledArrivalTime).fromNow()}</div>
-                <div class="">${convertMetersToMiles(distanceFromStop)}</div>
-            </div>
+            <div class="routeshortname"><h4>${routeShortName}</h4></div>
+            <div class="distancefromstop"><h5>${convertMetersToMiles(distanceFromStop)}</h5></div>
+            <div class="scheduledarrivaltime"><h5>${moment(scheduledArrivalTime).fromNow()}</h5></div>
     `;
 }
 
@@ -251,7 +248,7 @@ function configureMomentJs() {
             past:   "%s ago",
             s  : 'a few seconds',
             ss : '%d seconds',
-            m:  "a minute",
+            m:  "a min",
             mm: "%d m",
             h:  "an hour",
             hh: "%d hours",
