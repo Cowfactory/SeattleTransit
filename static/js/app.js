@@ -6,6 +6,7 @@ var statusCircleEl;
 var incomingBussesEl;
 var carouselParentEl;
 var loadScreen;
+var dist;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -117,7 +118,8 @@ function renderStops(stops) {
     // Add every stop to the element in DOM
     let stopMap = {}
     stops.forEach(stop => {
-        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}> <div><h5>${stop.name}</h5><h6>Distance:</h6></div> </section>`);
+        distance(stop);
+        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}> <div><h5>${stop.name}</h5><h6>Distance: ${dist}mi</h6></div> </section>`);
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -126,6 +128,36 @@ function renderStops(stops) {
     });
     setupCarousel(stopMap);
 };
+
+function distance(stop, unit) {
+    let lat1 = localStorage.getItem('lastKnownLat');
+    let lon1 = localStorage.getItem('lastKnownLon');
+    let lat2 = stop.lat;
+    let lon2 = stop.lon;
+
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+        if (unit=="N") { dist = dist * 0.8684 }
+        dist = dist.toFixed(2);
+		return dist;
+	}
+}
+
+// Carousel related stuff
 function setupCarousel(stopMap) {
     $('.carousel').carousel({
         onCycleTo: () => {
@@ -170,9 +202,8 @@ function setupCarousel(stopMap) {
     })
 }
 
-
 function renderRoutes(routes) {
-    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);
@@ -233,4 +264,3 @@ function configureMomentJs() {
         }
     });
 }
-
