@@ -74,8 +74,8 @@ function findNearbyStops() {
             .then(response => response.json())
             .then(stops => renderStops(stops))
             .then(() => {
-                setStatusMsg("");
-                toggleStatusVisibility();
+                // setStatusMsg("");
+                // toggleStatusVisibility();
             });
     };
 
@@ -101,6 +101,8 @@ function toggleStatusVisibility() {
     statusCircleEl.classList.toggle('hide');
     statusMsgEl.classList.toggle('hide');
     searchMsgEl.classList.toggle('hide');
+    $('#toggle').hide();
+    $('#incomingbusses').hide();
 }
 function setStatusMsg(msg) {
     statusMsgEl.textContent = msg;
