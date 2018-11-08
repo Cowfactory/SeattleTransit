@@ -84,7 +84,10 @@ function findNearbyStops() {
 function getArrivalsAndDeparturesForStop(stopId) {
     // if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
-    // console.log(stopId);
+    console.log(stopId);
+    setStatusMsg('Getting Bus List...');
+    toggleStatusVisibility();
+    // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${stopId}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes))
@@ -142,63 +145,45 @@ function setupCarousel(stopMap) {
     }); 
     $('.carousel').click(function(e){
         let target; 
-        // console.log(e.target);
-        if(e.target.localName !== 'div') {
+        //reject clicks on carousel container
+        if(e.target.classList.contains('transparent') || e.target.classList.contains('carousel')) {
+            console.log("rejecting click");
             return;
         }
-        else if(e.target.localName !== 'section') {
-            // console.log("this is not a section");
-            // console.log(e.target.parentNode.parentNode.id);
-            target = e.target.parentNode.parentNode;
-        } else {
-            target = e.target;
+        //reject clicks on neighbor carousel items - accept click on the section part of active item
+        if(e.target.classList.contains('carousel-item') && 
+                e.target.classList.contains('active') || 
+                e.target.parentNode.parentNode.localName === 'section' && 
+                e.target.parentNode.parentNode.classList.contains('active')) { // !== 'section') {
+            //check if click is on parent section or child divs (both are valid)
+            if(e.target.localName === 'section') {
+                target = e.target;
+            } else {
+                target = e.target.parentNode.parentNode;
+            } 
+        }
+        else {
+            return;
         }
         getArrivalsAndDeparturesForStop(target.id);
-        // console.log(target.id);
-        // console.dir(e.target);
-        // if(e.tasrget.)
+
     })
 }
 
 
 function renderRoutes(routes) {
-    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
-
+    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);
     }
-
     // Add every Arrival And Departure "route" to the element in DOM
     routes.forEach(route => { 
-        // console.log(route);
         let containingDiv = document.createElement('div');
         containingDiv.innerHTML = constructCardHtml(route); 
-
-        // let routeNumber = document.createElement('div');
-        // let details = document.createElement('div');
-        // let estimatedArrivalTime = document.createElement('div');
-
-        // routeNumber.innerHTML = `<div><h3>${route.routeShortName}</h3></div>`;
-        // details.innerHTML = `<h6>${route.tripHeadsign}</h6> <br> Distance from stop: ${distanceFromStop(route.distanceFromStop)}`;
-        // estimatedArrivalTime.innerHTML = `<h5>${moment(route.scheduledArrivalTime).fromNow()}</h5>`;
-        
         containingDiv.classList.add("incomingbuscard");
-        // routeNumber.classList.add("route", "valign-wrapper");
-        // details.classList.add("tripheadsign");
-        // estimatedArrivalTime.classList.add("estimatedarrivaltime", "valign-wrapper");
-
-        // div.innerHTML = `<div class="route"><h5>${route.routeShortName}</h5></div> <div class="tripheadsign><h6>Trip: ${route.tripHeadsign}</h6>
-        //     Distance from stop: ${distanceFromStop(route.distanceFromStop)}</div> <div>${moment(route.scheduledArrivalTime).fromNow()}</div>`;
-            // ul.appendChild(div);
-
-        // [routeNumber, details, estimatedArrivalTime].forEach(function(child) {
-        //     containingDiv.appendChild(child);
-        // })
         incomingBussesEl.appendChild(containingDiv);
-        // return route;
     })
-    // stopListEl.appendChild(ul);
 };
 
 function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
