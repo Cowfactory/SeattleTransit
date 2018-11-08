@@ -89,7 +89,6 @@ function getArrivalsAndDeparturesForStop(e) {
     // console.log(e);
     setStatusMsg('Getting Bus List...');
     toggleStatusVisibility();
-    console.log(e.target);
     // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
