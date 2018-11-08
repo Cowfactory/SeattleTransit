@@ -104,22 +104,44 @@ i {
     z-index: 9999999999 !important;
 }
 
-.incomingbusses {
-    z-index: 1;
-    position: absolute;
-    display: flex;
+/* .buscontainer {
     top: 5vh;
     width: 100%;
-    height: 57vh;
-    overflow: auto;
-}
-.card-panel {
+    padding: 0 2em;
+} */
+/* .buscontainer .card-panel {
+    width: 95%; 
+    align-items: center;
+} */
+/* .card-panel {
     text-align: center;
-    overflow: auto;
-    width: 30vw;
+    width: 40vw;
     min-width: 270px;
     max-height: 50vh;
-    border-radius: 30px;
+    display: flex; 
+} */
+
+.incomingbuscard {
     align-content: center;
-    padding: 0px 8px 11px !important;
+    background-color: #ccff8e;
+    text-align: center;
+    padding: 0 !important;
+    display: flex;
+}
+#incomingbusses div{
+    margin: 1%;
+    padding: 0 !important;
+    border-radius: 40px;
+}
+
+#incomingbusses {
+    position: absolute;
+    top: 139px;
+    width: 95%;
+    overflow: auto;
+    height: 62vh;
+    z-index: 1;
+}
+.row {
+    margin: auto;
 }

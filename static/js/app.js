@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cacheDomElements();
     addEventListeners();
     sideNav();
+    configureMomentJs();
 });
 
 function cacheDomElements() {
@@ -98,7 +99,7 @@ function renderStops(stops) {
 
 
 function renderRoutes(routes) {
-    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
@@ -108,18 +109,52 @@ function renderRoutes(routes) {
     // Add every Arrival And Departure "route" to the element in DOM
     routes.forEach(route => { 
         // console.log(route);
-        let div = document.createElement('div');
-        div.classList.add("card-panel");
-        div.innerHTML = `<h5>Bus: ${route.routeShortName}</h5> <h6>Trip: ${route.tripHeadsign}</h6> 
-            Distance from stop: ${distanceFromStop(route.distanceFromStop)} <br> Schedule arrival time: ${moment(route.scheduledArrivalTime).fromNow()}`;
+        let containingDiv = document.createElement('div');
+        containingDiv.innerHTML = constructCardHtml(route); 
+
+        // let routeNumber = document.createElement('div');
+        // let details = document.createElement('div');
+        // let estimatedArrivalTime = document.createElement('div');
+
+        // routeNumber.innerHTML = `<div><h3>${route.routeShortName}</h3></div>`;
+        // details.innerHTML = `<h6>${route.tripHeadsign}</h6> <br> Distance from stop: ${distanceFromStop(route.distanceFromStop)}`;
+        // estimatedArrivalTime.innerHTML = `<h5>${moment(route.scheduledArrivalTime).fromNow()}</h5>`;
+        
+        containingDiv.classList.add("incomingbuscard");
+        // routeNumber.classList.add("route", "valign-wrapper");
+        // details.classList.add("tripheadsign");
+        // estimatedArrivalTime.classList.add("estimatedarrivaltime", "valign-wrapper");
+
+        // div.innerHTML = `<div class="route"><h5>${route.routeShortName}</h5></div> <div class="tripheadsign><h6>Trip: ${route.tripHeadsign}</h6>
+        //     Distance from stop: ${distanceFromStop(route.distanceFromStop)}</div> <div>${moment(route.scheduledArrivalTime).fromNow()}</div>`;
             // ul.appendChild(div);
-        incomingBussesEl.appendChild(div);
-        return route;
+
+        // [routeNumber, details, estimatedArrivalTime].forEach(function(child) {
+        //     containingDiv.appendChild(child);
+        // })
+        incomingBussesEl.appendChild(containingDiv);
+        // return route;
     })
     // stopListEl.appendChild(ul);
 };
 
-function distanceFromStop(meters) {
+function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
+    // console.log({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop});
+    return `
+            <div class="row">
+                <div class="tripheadsign">
+                    <h5>${tripHeadsign}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class=""><h4>${routeShortName}</h4></div>
+                <div class="">${moment(scheduledArrivalTime).fromNow()}</div>
+                <div class="">${convertMetersToMiles(distanceFromStop)}</div>
+            </div>
+    `;
+}
+
+function convertMetersToMiles(meters) {
     let feet = (meters*3.2808);
     let miles = (feet / 5280).toFixed(2) + " mi";
     return miles;
@@ -128,9 +163,25 @@ function distanceFromStop(meters) {
 function sideNav() {
     var elem = document.querySelector('.sidenav');
     var instance = new M.Sidenav(elem);
-    var collapsibleElem = document.querySelector('.collapsible');
-    // var collapsibleInstance = new M.Collapsible(collapsibleElem);
-    // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
-    // var collapsibleElem = document.querySelector('.collapsible');
-    // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
 };
+
+function configureMomentJs() {
+    moment.updateLocale('en', {
+        relativeTime : {
+            future: "in %s",
+            past:   "%s ago",
+            s  : 'a few seconds',
+            ss : '%d seconds',
+            m:  "a minute",
+            mm: "%d m",
+            h:  "an hour",
+            hh: "%d hours",
+            d:  "a day",
+            dd: "%d days",
+            M:  "a month",
+            MM: "%d months",
+            y:  "a year",
+            yy: "%d years"
+        }
+    });
+}
