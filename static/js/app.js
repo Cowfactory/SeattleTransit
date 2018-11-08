@@ -26,15 +26,12 @@ function cacheDomElements() {
     statusCircleEl = document.getElementById("statusCircle");
     statusMsgEl = document.getElementById("statusMsg");
     incomingBussesEl = document.getElementById("incomingbusses")
-
-    carouselParentEl = document.getElementById("carouselParent");
     loadScreen = document.getElementById("loadscreen");
 };
 
 function addEventListeners() {
     // "Find Nearby Stops" button queries database for stops near the current geolocation
     searchBtnEl.addEventListener("click", findNearbyStops);
-    carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
 function removeLoadScreen() {
@@ -84,11 +81,11 @@ function findNearbyStops() {
 
 }
 
-function getArrivalsAndDeparturesForStop(e) {
-    if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
+function getArrivalsAndDeparturesForStop(stopId) {
+    // if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
-    // console.log(e.target.id);
-    fetch(`/api/stopDetails?stopid=${e.target.id}`)
+    // console.log(stopId);
+    fetch(`/api/stopDetails?stopid=${stopId}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes))
         .then(() => {
@@ -108,7 +105,7 @@ function setStatusMsg(msg) {
 
 // AJAX render functions
 function renderStops(stops) {
-    console.log(stops); // Uncomment to view all the data available to a Stop in console
+    // console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
     $('#carouselParent').empty();
 
@@ -117,7 +114,7 @@ function renderStops(stops) {
     // Add every stop to the element in DOM
     let stopMap = {}
     stops.forEach(stop => {
-        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}><div><h5>${stop.name}</h5><h6>Distance:</h6><h6>Routes:</h6></div></section>`);
+        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}> <div><h5>${stop.name}</h5><h6>Distance:</h6></div> </section>`);
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -129,23 +126,43 @@ function renderStops(stops) {
 function setupCarousel(stopMap) {
     $('.carousel').carousel({
         onCycleTo: () => {
-            const stopId = document.getElementsByClassName('active')[0].id;
+            let stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-        $('.active').click(function(){
-            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
-            $('#toggle').show( "slide", { direction: "up" }, "slow" );
-        }); 
-        $('#toggle').click(function(){
-            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
-            $('.carousel').show( "slide", { direction: "down" }, "slow" );
-        });
+            $('.active').click(function(){
+                $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+                $('#toggle').show( "slide", { direction: "up" }, "slow" );
+                $('#incomingbusses').show( "slide", { direction: "up" }, "slow")
+            }); 
         }   
+    })
+    $('#toggle').click(function(){
+        $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+        $('#incomingbusses').hide( "slide", { direction: "up" }, "slow" );
+        $('.carousel').show( "slide", { direction: "down" }, "slow" );
+    }); 
+    $('.carousel').click(function(e){
+        let target; 
+        // console.log(e.target);
+        if(e.target.localName !== 'div') {
+            return;
+        }
+        else if(e.target.localName !== 'section') {
+            // console.log("this is not a section");
+            // console.log(e.target.parentNode.parentNode.id);
+            target = e.target.parentNode.parentNode;
+        } else {
+            target = e.target;
+        }
+        getArrivalsAndDeparturesForStop(target.id);
+        // console.log(target.id);
+        // console.dir(e.target);
+        // if(e.tasrget.)
     })
 }
 
 
 function renderRoutes(routes) {
-    console.log(routes); // Uncomment to view all the Routes available to a Stop in console
+    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
 
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {

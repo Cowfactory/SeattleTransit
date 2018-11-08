@@ -184,6 +184,10 @@ html, body {
     font-size: 50px;
 }
 
+.toggleBtn {
+    text-decoration: underline;
+}
+
 .pillbutton {
     background-color: #ffffff;
     border: none;
