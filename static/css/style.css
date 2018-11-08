@@ -84,10 +84,17 @@ html, body {
     width: 100vw; 
 }
 
+.mapboxgl-ctrl-group > button {
+    width: 40px;
+    height:40px;
+}
+
 #menu {
     position: absolute;
     z-index: 1;
-    color: #ccff8e;
+    background-color: #ccff8e;
+    color: #50bec8;
+    border-radius: 12px;
     font-size: 50px;
 }
 
@@ -147,6 +154,20 @@ html, body {
     border-radius: 100px;
     padding-bottom: 0;
     color: white;
+}
+
+#toggle {
+    position: absolute;
+    background-color: #50bec8;
+    color: white;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    font-size: 50px;
+    z-index: 1;
+    left: 44vw;
+    top: 83vh;
 }
 
 .pillbutton {

@@ -66,7 +66,7 @@ const map = (() => {
         let location = {};
         let locationObj = {};
         locationObj.center = [stop.lon, stop.lat];
-        locationObj.zoom = 16;
+        locationObj.zoom = 17;
         location[stop.id] = locationObj;
         var sectionId = document.getElementsByClassName('active')[0].id;
         if (stop.id === sectionId) {
@@ -76,6 +76,12 @@ const map = (() => {
 
     function addStopToMap(stop) {
         // console.log(stop);
+
+        if (map.getSource(stop.id) && map.getLayer(stop.id)){
+            map.removeLayer(stop.id);
+            map.removeSource(stop.id);
+        }
+
         let coords = [];
         coords.push(stop.lon);
         coords.push(stop.lat);
