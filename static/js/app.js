@@ -90,7 +90,7 @@ function renderStops(stops) {
     // Add every stop to the element in DOM
     const stopMap = {}
     stops.forEach(stop => {
-        let section = $(`<section class='carousel-item card' id=${stop.id}><p>${stop.name}</p></section>`);
+        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}><div><h5>${stop.name}</h5><h6>Distance:</h6><h6>Routes:</h6></div></section>`);
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -101,7 +101,6 @@ function renderStops(stops) {
         onCycleTo: () => {
             const stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-    
         $('.active').click(function(){
             $('.carousel').hide( "slide", { direction: "down" }, "slow" );
             $('#toggle').show( "slide", { direction: "up" }, "slow" );
