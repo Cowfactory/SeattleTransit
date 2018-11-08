@@ -3,17 +3,98 @@ html, body {
     padding:0;
     height: 100vh;
     width: 100vw;
+    font-family: 'PT Sans', sans-serif;
 }   
+
+/* Load Screen */
+#loadscreen {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 100;
+    background-color: #50bec8;
+}
+
+@media all and (min-width: 1200px) {
+    #loadscreen > img {
+        display: block;
+        width: 25%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5%;
+    }
+    #loadscreen > h1 {
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 5%;
+    }
+}
+/* Large Size Screens */
+@media all and (min-width: 993px) {
+    #loadscreen > img {
+        display: block;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5%;
+    }
+    #loadscreen > h1 {
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 5%;
+    }
+}
+/* Medium Size Screens */
+@media all and (max-width: 992px) { 
+    #loadscreen > img {
+        display: block;
+        width: 55%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15%;
+    }
+    #loadscreen > h1 {
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 5%;
+    }
+}
+/* Mobile */
+@media all and (max-width: 600px) { 
+    #loadscreen > img {
+        display: block;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20%;
+    }
+    #loadscreen > h1 {
+        color: white;
+        font-size: 3.3rem;
+        text-align: center;
+    }
+}   
+
 
 #map {
     height: 100vh; 
     width: 100vw; 
 }
 
+.mapboxgl-ctrl-group > button {
+    width: 40px;
+    height:40px;
+}
+
 #menu {
     position: absolute;
     z-index: 1;
-    color: #ccff8e;
+    background-color: #ccff8e;
+    color: #50bec8;
+    border-radius: 12px;
     font-size: 50px;
 }
 
@@ -24,7 +105,7 @@ html, body {
 .profile {
     background-color: #50bec8;
 }
-
+/* Search button and Status Messages */
 #searchBtn {
     position: absolute;
     margin: auto;
@@ -36,7 +117,17 @@ html, body {
     background-color: #ccff8e;
     color: #50bec8;
 }
- 
+#statusCircle {
+    /* float: left; */
+    display: inline-block;
+}
+
+#statusMsg {
+    display: inline-block;
+    /* width: 60vw; */
+    /* left: 50%; */
+} 
+
 .map-overlay-container {
     position: absolute;
     width: 25%;
@@ -65,6 +156,20 @@ html, body {
     border-radius: 100px;
     padding-bottom: 0;
     color: white;
+}
+
+#toggle {
+    position: absolute;
+    background-color: #50bec8;
+    color: white;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    font-size: 50px;
+    z-index: 1;
+    left: 44vw;
+    top: 83vh;
 }
 
 .pillbutton {

@@ -17,7 +17,7 @@ const map = (() => {
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [pos.lon, pos.lat], // starting position
-            zoom: 14 // starting zoom
+            zoom: 13 // starting zoom
         });
         addMapCustomizations();
     }
@@ -57,6 +57,7 @@ const map = (() => {
 
         // Trigger a geolocate on map startup
         map.on('load', function() {
+            removeLoadScreen();
             mb_geolocate.trigger();
         })        
     }
@@ -65,7 +66,7 @@ const map = (() => {
         let location = {};
         let locationObj = {};
         locationObj.center = [stop.lon, stop.lat];
-        locationObj.zoom = 18;
+        locationObj.zoom = 17;
         location[stop.id] = locationObj;
         var sectionId = document.getElementsByClassName('active')[0].id;
         if (stop.id === sectionId) {
@@ -75,6 +76,12 @@ const map = (() => {
 
     function addStopToMap(stop) {
         // console.log(stop);
+
+        if (map.getSource(stop.id) && map.getLayer(stop.id)){
+            map.removeLayer(stop.id);
+            map.removeSource(stop.id);
+        }
+
         let coords = [];
         coords.push(stop.lon);
         coords.push(stop.lat);

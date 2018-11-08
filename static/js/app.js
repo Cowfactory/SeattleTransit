@@ -1,8 +1,11 @@
 // DOM Elements
 var searchBtnEl;
-var outputEl;
+var searchMsgEl;
+var statusMsgEl;
+var statusCircleEl;
 var incomingBussesEl;
 var carouselParentEl;
+var loadScreen;
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -13,10 +16,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function cacheDomElements() {
+    searchMsgEl = document.getElementById("searchMsg");
     searchBtnEl = document.getElementById("searchBtn");
+    statusCircleEl = document.getElementById("statusCircle");
+    statusMsgEl = document.getElementById("statusMsg");
     incomingBussesEl = document.getElementById("incomingbusses")
-    outputEl = document.getElementById("locationStatus");
+
     carouselParentEl = document.getElementById("carouselParent");
+    loadScreen = document.getElementById("loadscreen");
 };
 
 function addEventListeners() {
@@ -25,8 +32,14 @@ function addEventListeners() {
     carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
+function removeLoadScreen() {
+    loadScreen.parentNode.removeChild(loadScreen);
+}
+
 // Click Events
 function findNearbyStops() {
+    setStatusMsg('Getting location...');
+    toggleStatusVisibility();
     geolocation.getPosition(
         function errCb(errMsg) {
             // Use the last known lat and lon from localStorage instead
@@ -36,17 +49,19 @@ function findNearbyStops() {
 
             //If we have a last known position: 
             if(lastKnownLat && lastKnownLon) {
-                outputEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
-                    Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                // statusMsgEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
+                //     Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
+                setStatusMsg("Using last known location...")
                 fetchStopsFromApi(lastKnownLat, lastKnownLon);
             } 
             // Else failure
             else {
-                outputEl.innerHTML = `<p>${errMsg}`
+                console.log(`${errMsg}`);
+                setStatusMsg(`Please Try Again`);
             }
         },
         function successCb(pos) {
-            outputEl.innerHTML = `<p>Latitude is ${pos.lat}'° <br>Longitude is ${pos.lon}'°</p>`;
+            setStatusMsg('Fetching stops...');
             // Query Api for Stops near this position
             fetchStopsFromApi(pos.lat, pos.lon);
         }
@@ -55,32 +70,47 @@ function findNearbyStops() {
     function fetchStopsFromApi(lat, lon) {
         fetch(`/api/stopsAtLocation?lat=${lat}&lon=${lon}`)
             .then(response => response.json())
-            .then(stops => renderStops(stops));
+            .then(stops => renderStops(stops))
+            .then(() => {
+                setStatusMsg("");
+                toggleStatusVisibility();
+            });
     };
 
-    outputEl.innerHTML = "<p>Locating…</p>";
 }
 
 function getArrivalsAndDeparturesForStop(e) {
     if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
-    console.log(e.target.id);
+    // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${e.target.id}`)
         .then(response => response.json())
-        .then(routes => renderRoutes(routes));
+        .then(routes => renderRoutes(routes))
+        .then(() => {
+            setStatusMsg("");
+            toggleStatusVisibility();
+        });
 } 
+
+function toggleStatusVisibility() {
+    statusCircleEl.classList.toggle('hide');
+    statusMsgEl.classList.toggle('hide');
+    searchMsgEl.classList.toggle('hide');
+}
+function setStatusMsg(msg) {
+    statusMsgEl.textContent = msg;
+}
 
 // AJAX render functions
 function renderStops(stops) {
     console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
-    // $('carouselParent').empty();
-    // $('.carousel').destroy();
+    $('#carouselParent').empty();
 
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
     $(carousel).appendTo($('.map-overlay'));
     // Add every stop to the element in DOM
-    const stopMap = {}
+    let stopMap = {}
     stops.forEach(stop => {
         let section = $(`<section class='carousel-item card' id=${stop.id}><p>${stop.name}</p></section>`);
         $(section).appendTo($('#carousel'));
@@ -89,13 +119,25 @@ function renderStops(stops) {
         map.flyToStop(stop);
         stopMap[stop.id] = stop
     });
+    setupCarousel(stopMap);
+};
+function setupCarousel(stopMap) {
     $('.carousel').carousel({
         onCycleTo: () => {
             const stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-        }
+    
+        $('.active').click(function(){
+            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+            $('#toggle').show( "slide", { direction: "up" }, "slow" );
+        }); 
+        $('#toggle').click(function(){
+            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+            $('.carousel').show( "slide", { direction: "down" }, "slow" );
+        });
+        }   
     })
-};
+}
 
 
 function renderRoutes(routes) {
@@ -183,5 +225,7 @@ function configureMomentJs() {
             y:  "a year",
             yy: "%d years"
         }
-    });
-}
+      });
+  }
+};
+

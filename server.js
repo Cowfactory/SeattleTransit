@@ -60,5 +60,5 @@ app.use('/api', apiRouter);
 app.use('/', indexRouter);
 
 // Start the server - listen for requests
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 

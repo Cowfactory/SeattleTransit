@@ -1,5 +1,10 @@
 <%- include ./partials/header.ejs %>
 
+<div id="loadscreen">
+    <img src="/img/SeattleTransitLogo.svg" alt="Seattle Transit Logo">
+    <h1>Know exactly <br><i>when</i><br> you're going</h1>
+</div>
+
 <!-- Incoming Busses -->
 <!-- <div class="container"> -->
     <div id="incomingbusses">
@@ -18,10 +23,29 @@
     </div>
 </div>
 
+<!-- Toggle button for carousel -->
+<div id='toggle' class="hide">^</div>
+
 <!-- Button to get current location -->
-<button class="btn" id="searchBtn">Stops Nearby</button>
-<!-- Shows the status of the geolocation lookup -->
-<div id="locationStatus"></div>
+<button class="btn valign-wrapper" id="searchBtn">
+    <div class="">
+        <div id="statusCircle" class="hide">
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="statusMsg" class="hide center-align"></div>
+        <div id="searchMsg" class="center-align">Search For Stops</div>
+    </div>
+</button>
 
 <script src="/js/geolocation.js" defer></script>
 <script src="/js/map.js" defer></script>
