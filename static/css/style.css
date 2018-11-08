@@ -249,6 +249,15 @@ i {
     height: 62vh;
     z-index: 1;
 }
-.row {
-    margin: auto;
+.tripheadsign {
+
+}
+.routeshortname {
+    flex-basis: 15%;
+}
+.scheduledarrivaltime {
+    flex-basis: auto;
+}
+.distancefromstop {
+    flex-basis: 25%;
 }
