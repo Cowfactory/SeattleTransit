@@ -184,6 +184,10 @@ html, body {
     font-size: 50px;
 }
 
+.toggleBtn {
+    text-decoration: underline;
+}
+
 .pillbutton {
     background-color: #ffffff;
     border: none;
@@ -223,7 +227,7 @@ i {
 
 .incomingbuscard {
     align-content: center;
-    background-color: #ccff8e;
+    background-color: #50bec8;
     text-align: center;
     padding: 0 !important;
     display: grid;
@@ -233,7 +237,7 @@ i {
                             "routeshortname scheduledarrivaltime distancefromstop";
 }
 #incomingbusses div{
-    margin: 1%;
+    margin: 0 0 1% 0;
     padding: 0 !important;
     border-radius: 40px;
 }
@@ -250,10 +254,34 @@ i {
 } 
 .routeshortname {
     grid-area: routeshortname;
+    margin: 0;
+    border-radius: 0 0 0 40px !important;
 }
 .scheduledarrivaltime {
     grid-area: scheduledarrivaltime;
+    margin: 0;
+    border-radius: 0 !important;
 }
 .distancefromstop {
     grid-area: distancefromstop;
+    margin: 0;
+    border-radius: 0 0 40px 0 !important;
+}
+.tripheadsign :first-child,.scheduledarrivaltime :first-child,.distancefromstop :first-child,.routeshortname :first-child {
+    line-height: 0.3em;
+}
+.tripheadsign:first-child {
+    color: white;
+    font-style: oblique;
+}
+.tripheadsign h5 {
+    font-weight: 800;
+}
+.routeshortname,.scheduledarrivaltime,.distancefromstop {
+    background: #8be8f1;
+    /* border: #ccff8e 2px solid; */
+    box-sizing: border-box;
+}
+#incomingbusses h5 {
+    padding: 3% 0 2% 0 !important;
 }

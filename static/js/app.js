@@ -26,15 +26,12 @@ function cacheDomElements() {
     statusCircleEl = document.getElementById("statusCircle");
     statusMsgEl = document.getElementById("statusMsg");
     incomingBussesEl = document.getElementById("incomingbusses")
-
-    carouselParentEl = document.getElementById("carouselParent");
     loadScreen = document.getElementById("loadscreen");
 };
 
 function addEventListeners() {
     // "Find Nearby Stops" button queries database for stops near the current geolocation
     searchBtnEl.addEventListener("click", findNearbyStops);
-    carouselParentEl.addEventListener("click", getArrivalsAndDeparturesForStop)
 };
 
 function removeLoadScreen() {
@@ -84,13 +81,14 @@ function findNearbyStops() {
 
 }
 
-function getArrivalsAndDeparturesForStop(e) {
-    if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
+function getArrivalsAndDeparturesForStop(stopId) {
+    // if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
     // console.log(e);
+    console.log(stopId);
     setStatusMsg('Getting Bus List...');
     toggleStatusVisibility();
-    console.log(e.target.id);
-    fetch(`/api/stopDetails?stopid=${e.target.id}`)
+    // console.log(e.target.id);
+    fetch(`/api/stopDetails?stopid=${stopId}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes))
         .then(() => {
@@ -110,7 +108,7 @@ function setStatusMsg(msg) {
 
 // AJAX render functions
 function renderStops(stops) {
-    console.log(stops); // Uncomment to view all the data available to a Stop in console
+    // console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
     $('#carouselParent').empty();
 
@@ -119,7 +117,7 @@ function renderStops(stops) {
     // Add every stop to the element in DOM
     let stopMap = {}
     stops.forEach(stop => {
-        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}><div><h5>${stop.name}</h5><h6>Distance:</h6><h6>Routes:</h6></div></section>`);
+        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}> <div><h5>${stop.name}</h5><h6>Distance:</h6></div> </section>`);
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -131,19 +129,44 @@ function renderStops(stops) {
 function setupCarousel(stopMap) {
     $('.carousel').carousel({
         onCycleTo: () => {
-            const stopId = document.getElementsByClassName('active')[0].id;
+            let stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-        $('.active').click(function(){
-            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
-            $('#toggle').show( "slide", { direction: "up" }, "slow" );
-            $('#incomingbusses').show( "slide", { direction: "up" }, "slow")
-        }); 
-        $('#toggle').click(function(){
-            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
-            $('#incomingbusses').hide( "slide", { direction: "up" }, "slow" );
-            $('.carousel').show( "slide", { direction: "down" }, "slow" );
-        });
+            $('.active').click(function(){
+                $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+                $('#toggle').show( "slide", { direction: "up" }, "slow" );
+                $('#incomingbusses').show( "slide", { direction: "up" }, "slow")
+            }); 
         }   
+    })
+    $('#toggle').click(function(){
+        $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+        $('#incomingbusses').hide( "slide", { direction: "up" }, "slow" );
+        $('.carousel').show( "slide", { direction: "down" }, "slow" );
+    }); 
+    $('.carousel').click(function(e){
+        let target; 
+        //reject clicks on carousel container
+        if(e.target.classList.contains('transparent') || e.target.classList.contains('carousel')) {
+            console.log("rejecting click");
+            return;
+        }
+        //reject clicks on neighbor carousel items - accept click on the section part of active item
+        if(e.target.classList.contains('carousel-item') && 
+                e.target.classList.contains('active') || 
+                e.target.parentNode.parentNode.localName === 'section' && 
+                e.target.parentNode.parentNode.classList.contains('active')) { // !== 'section') {
+            //check if click is on parent section or child divs (both are valid)
+            if(e.target.localName === 'section') {
+                target = e.target;
+            } else {
+                target = e.target.parentNode.parentNode;
+            } 
+        }
+        else {
+            return;
+        }
+        getArrivalsAndDeparturesForStop(target.id);
+
     })
 }
 
@@ -165,13 +188,14 @@ function renderRoutes(routes) {
 
 function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
     // console.log({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop});
+    // console.log('here')
     return `
             <div class="tripheadsign">
                 <div><h5>${tripHeadsign}</h5></div>
             </div>
             <div class="routeshortname"><h4>${routeShortName}</h4></div>
-            <div class="distancefromstop"><h6>${convertMetersToMiles(distanceFromStop)}</h6></div>
-            <div class="scheduledarrivaltime"><h4>${moment(scheduledArrivalTime).fromNow()}</h4></div>
+            <div class="distancefromstop"><h5>${convertMetersToMiles(distanceFromStop)}</h5></div>
+            <div class="scheduledarrivaltime"><h5>${moment(scheduledArrivalTime).fromNow()}</h5></div>
     `;
 }
 
@@ -193,7 +217,7 @@ function configureMomentJs() {
             past:   "%s ago",
             s  : 'a few seconds',
             ss : '%d seconds',
-            m:  "a m",
+            m:  "a min",
             mm: "%d m",
             h:  "an hour",
             hh: "%d hours",
