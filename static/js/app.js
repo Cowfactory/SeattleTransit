@@ -225,7 +225,6 @@ function configureMomentJs() {
             y:  "a year",
             yy: "%d years"
         }
-      });
-  }
-};
+    });
+}
 
