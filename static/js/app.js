@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
     configureMomentJs();
 });
 
+$(document).ready(function() {
+    $('#toggle').hide();
+    $('#incomingbusses').hide();
+})
+
 function cacheDomElements() {
     searchMsgEl = document.getElementById("searchMsg");
     searchBtnEl = document.getElementById("searchBtn");
@@ -141,42 +146,17 @@ function setupCarousel(stopMap) {
 
 function renderRoutes(routes) {
     console.log(routes); // Uncomment to view all the Routes available to a Stop in console
-
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);
     }
-
     // Add every Arrival And Departure "route" to the element in DOM
     routes.forEach(route => { 
-        // console.log(route);
         let containingDiv = document.createElement('div');
         containingDiv.innerHTML = constructCardHtml(route); 
-
-        // let routeNumber = document.createElement('div');
-        // let details = document.createElement('div');
-        // let estimatedArrivalTime = document.createElement('div');
-
-        // routeNumber.innerHTML = `<div><h3>${route.routeShortName}</h3></div>`;
-        // details.innerHTML = `<h6>${route.tripHeadsign}</h6> <br> Distance from stop: ${distanceFromStop(route.distanceFromStop)}`;
-        // estimatedArrivalTime.innerHTML = `<h5>${moment(route.scheduledArrivalTime).fromNow()}</h5>`;
-        
         containingDiv.classList.add("incomingbuscard");
-        // routeNumber.classList.add("route", "valign-wrapper");
-        // details.classList.add("tripheadsign");
-        // estimatedArrivalTime.classList.add("estimatedarrivaltime", "valign-wrapper");
-
-        // div.innerHTML = `<div class="route"><h5>${route.routeShortName}</h5></div> <div class="tripheadsign><h6>Trip: ${route.tripHeadsign}</h6>
-        //     Distance from stop: ${distanceFromStop(route.distanceFromStop)}</div> <div>${moment(route.scheduledArrivalTime).fromNow()}</div>`;
-            // ul.appendChild(div);
-
-        // [routeNumber, details, estimatedArrivalTime].forEach(function(child) {
-        //     containingDiv.appendChild(child);
-        // })
         incomingBussesEl.appendChild(containingDiv);
-        // return route;
     })
-    // stopListEl.appendChild(ul);
 };
 
 function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
