@@ -244,15 +244,14 @@ i {
     text-align: center;
     padding: 0 !important;
     /* display: grid;
-    grid-template-rows: 25% auto;
-    grid-template-columns: 25% auto 25%; */
+    grid-template-rows: .25fr .75fr;
+    grid-template-columns: .25fr .50fr .25fr; */
 }
 #incomingbusses div{
     margin: 1%;
     padding: 0 !important;
     border-radius: 40px;
 }
-
 #incomingbusses {
     position: absolute;
     top: 139px;
@@ -261,10 +260,10 @@ i {
     height: 62vh;
     z-index: 1;
 }
-.tripheadsign {
-    width: 100%;
-}
-.routeshortname {
+/* .tripheadsign {
+    grid-column-start: span 3;
+} */
+/* .routeshortname {
     flex-basis: 15%;
 }
 .scheduledarrivaltime {
@@ -272,4 +271,4 @@ i {
 }
 .distancefromstop {
     flex-basis: 25%;
-}
+} */
