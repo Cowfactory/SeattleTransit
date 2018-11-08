@@ -14,10 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
     sideNav();
 });
 
-// $(document).ready(function(){
-//     $('#toggle').hide()
-// });
-
 function cacheDomElements() {
     searchMsgEl = document.getElementById("searchMsg");
     searchBtnEl = document.getElementById("searchBtn");
@@ -41,7 +37,6 @@ function removeLoadScreen() {
 
 // Click Events
 function findNearbyStops() {
-    console.log("click!");
     setStatusMsg('Getting location...');
     toggleStatusVisibility();
     geolocation.getPosition(
@@ -114,7 +109,7 @@ function renderStops(stops) {
     let carousel = $(`<div class='carousel center' id='carousel'></div>`);
     $(carousel).appendTo($('.map-overlay'));
     // Add every stop to the element in DOM
-    const stopMap = {}
+    let stopMap = {}
     stops.forEach(stop => {
         let section = $(`<section class='carousel-item card' id=${stop.id}><p>${stop.name}</p></section>`);
         $(section).appendTo($('#carousel'));
@@ -123,22 +118,25 @@ function renderStops(stops) {
         map.flyToStop(stop);
         stopMap[stop.id] = stop
     });
-    // $('.carousel').carousel({
-    //     onCycleTo: () => {
-    //         const stopId = document.getElementsByClassName('active')[0].id;
-    //         map.flyToStop(stopMap[stopId]);
-    
-    //     $('.active').click(function(){
-    //         $('.carousel').hide( "slide", { direction: "down" }, "slow" );
-    //         $('#toggle').show( "slide", { direction: "up" }, "slow" );
-    //     }); 
-    //     $('#toggle').click(function(){
-    //         $('#toggle').hide( "slide", { direction: "up" }, "slow" );
-    //         $('.carousel').show( "slide", { direction: "down" }, "slow" );
-    //     });
-    //     }   
-    // })
+    setupCarousel(stopMap);
 };
+function setupCarousel(stopMap) {
+    $('.carousel').carousel({
+        onCycleTo: () => {
+            const stopId = document.getElementsByClassName('active')[0].id;
+            map.flyToStop(stopMap[stopId]);
+    
+        $('.active').click(function(){
+            $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+            $('#toggle').show( "slide", { direction: "up" }, "slow" );
+        }); 
+        $('#toggle').click(function(){
+            $('#toggle').hide( "slide", { direction: "up" }, "slow" );
+            $('.carousel').show( "slide", { direction: "down" }, "slow" );
+        });
+        }   
+    })
+}
 
 
 function renderRoutes(routes) {

@@ -29,11 +29,11 @@
 </div>
 
 <!-- Toggle button for carousel -->
-<div id='toggle'>^</div>
+<div id='toggle' class="hide">^</div>
 
 <!-- Button to get current location -->
-<button class="btn" id="searchBtn">
-    <div class="valign-wrapper">
+<button class="btn valign-wrapper" id="searchBtn">
+    <div class="">
         <div id="statusCircle" class="hide">
             <div class="preloader-wrapper small active">
                 <div class="spinner-layer spinner-green-only">
@@ -47,11 +47,11 @@
                 </div>
             </div>
         </div>
-        <div id="statusMsg" class="hide"></div>
+        <div id="statusMsg" class="hide center-align"></div>
         <div id="searchMsg" class="center-align">Search For Stops</div>
     </div>
-
 </button>
+
 <script src="/js/geolocation.js" defer></script>
 <script src="/js/map.js" defer></script>
 
