@@ -1,8 +1,5 @@
 // DOM Elements
-var searchBtnEl;
-var searchMsgEl;
-var statusMsgEl;
-var statusCircleEl;
+
 var incomingBussesEl;
 var carouselParentEl;
 var loadScreen;
@@ -22,10 +19,6 @@ $(document).ready(function() {
 })
 
 function cacheDomElements() {
-    searchMsgEl = document.getElementById("searchMsg");
-    searchBtnEl = document.getElementById("searchBtn");
-    statusCircleEl = document.getElementById("statusCircle");
-    statusMsgEl = document.getElementById("statusMsg");
     incomingBussesEl = document.getElementById("incomingbusses")
     loadScreen = document.getElementById("loadscreen");
 };
@@ -98,14 +91,6 @@ function getArrivalsAndDeparturesForStop(stopId) {
         });
 } 
 
-function toggleStatusVisibility() {
-    statusCircleEl.classList.toggle('hide');
-    statusMsgEl.classList.toggle('hide');
-    searchMsgEl.classList.toggle('hide');
-}
-function setStatusMsg(msg) {
-    statusMsgEl.textContent = msg;
-}
 
 // AJAX render functions
 function renderStops(stops) {
