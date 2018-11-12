@@ -9,14 +9,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    avatar: {
-        type: String,
-    },
     googleId: {
         type: String,
         required: true
     },
-    favoriteStops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stop' }]
+    bio: String,
+    favoriteStops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stop' }],
     
     // reminders: {} // Stretch goal
 }, {

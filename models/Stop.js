@@ -11,11 +11,9 @@ const stopSchema = new mongoose.Schema({
     },
     stop_lat: {
         type: Number,
-        required: true
     },
     stop_lon: {
         type: Number,
-        required: true
     },
     stop_direction: String,
     stop_routeIds: [{ type: String }],    

@@ -1,9 +1,12 @@
 // DOM Elements
-
 var incomingBussesEl;
 var carouselParentEl;
 var loadScreen;
 var dist;
+
+
+var favoriteBtn = document.getElementById('addfavoritebtn');
+
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -104,7 +107,14 @@ function renderStops(stops) {
     let stopMap = {}
     stops.forEach(stop => {
         distance(stop);
-        let section = $(`<section class='carousel-item card center valign-wrapper' id=${stop.id}> <div><h5>${stop.name}</h5><h6>Distance: ${dist}mi</h6></div> </section>`);
+        let section = $(
+        `<section class='carousel-item card center valign-wrapper' id=${stop.id}> 
+            <div>
+                <h5>${stop.name}</h5>
+                <h6>Distance: ${dist}mi</h6>
+            </div>
+        </section>`);
+        //<button id=${"fav"+stop.id} onclick="addFavoriteStop(this)">Add To Favorites!</button> 
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -113,6 +123,22 @@ function renderStops(stops) {
     });
     setupCarousel(stopMap);
 };
+
+// non functional - not used.
+function addFavoriteStop(e) {
+    let id = e.id.slice(3); //remove the prepended "fav" from the id to get proper stop id
+    let data = {
+        stop_name: e.parentNode.children[0].children[0].textContent,
+        stop_id: id,
+    }
+    // console.log(data.stop_id);
+ 
+    // This client sided post request does not work..?
+    // fetch('/stops/new', { //post this data to db
+    //     method: 'post',
+    //     body: data
+    // });
+}
 
 function distance(stop, unit) {
     let lat1 = localStorage.getItem('lastKnownLat');
@@ -148,17 +174,24 @@ function setupCarousel(stopMap) {
         onCycleTo: () => {
             let stopId = document.getElementsByClassName('active')[0].id;
             map.flyToStop(stopMap[stopId]);
-            $('.active').click(function(){
-                $('.carousel').hide( "slide", { direction: "down" }, "slow" );
-                $('#toggle').show( "slide", { direction: "up" }, "slow" );
-                $('#incomingbusses').show( "slide", { direction: "up" }, "slow")
-            }); 
+            
         }   
     })
+    $('.active').click(function(){
+        $('.carousel').hide( "slide", { direction: "down" }, "slow" );
+        $('#toggle').show( "slide", { direction: "up" }, "slow" );
+        $('#incomingbusses').show( "slide", { direction: "up" })
+        // $('.carousel').hide();
+        // $('#toggle').show();
+        // $('#incomingbusses').show();
+    }); 
     $('#toggle').click(function(){
         $('#toggle').hide( "slide", { direction: "up" }, "slow" );
-        $('#incomingbusses').hide( "slide", { direction: "up" }, "slow" );
+        $('#incomingbusses').hide( "slide", { direction: "up" });
         $('.carousel').show( "slide", { direction: "down" }, "slow" );
+        // $('#toggle').hide();
+        // $('#incomingbusses').hide();
+        // $('.carousel').show();
     }); 
     $('.carousel').click(function(e){
         let target; 
@@ -207,7 +240,7 @@ function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, 
     // console.log('here')
     return `
             <div class="tripheadsign">
-                <div><h5>${tripHeadsign}</h5></div>
+                <span>☆</span><div><h5>${tripHeadsign}</h5></div>
             </div>
             <div class="routeshortname"><h4>${routeShortName}</h4></div>
             <div class="distancefromstop"><h5>${convertMetersToMiles(distanceFromStop)}</h5></div>

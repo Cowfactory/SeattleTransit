@@ -6,7 +6,9 @@ html, body {
     width: 100vw;
     font-family: 'PT Sans', sans-serif;
 }   
-
+body {
+    min-height: 100vh;
+}
 /* Load Screen */
 #loadscreen {
     height: 100vh;

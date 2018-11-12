@@ -42,7 +42,7 @@
 </head>
 <body>
     <a href="#" data-target="slide-out" class="sidenav-trigger card"><i id="menu" class="large material-icons">menu</i></a>
-<script>
+<script> 
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
@@ -68,8 +68,22 @@
                 <a id="log" class="waves-effect pillbutton" href="/auth/google">Log In</a>
             <% } %>
         </div>
-        <div class="background valign-wrapper profile">
+        <div>
+            <% if(user) { %>
+                <!-- <p>Hello</p> -->
+                <% if (user.bio) { %> 
+                    <p><%= user.bio %></p>
+                <% } %>
+            
+                <div>
+                    <form action="/stops" method="post" class="text-center">
+                        <input type="text" name="bioText">
+                        <button type="submit" class="btn">Update</button>
+                    </form>
+                </div>
+            <% } %>
         </div>
+        <div class="background valign-wrapper profile"></div>
     </div>
     <div class="center-align">
         <button a href="#!" class="pillbutton"><i class="tiny material-icons">favorite</i>Favorites</button>
