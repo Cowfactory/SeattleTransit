@@ -13,10 +13,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    bio: String,
-    favoriteStops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Stop' }],
-    
-    // reminders: {} // Stretch goal
+    bio: String,    
 }, {
     timestamps: true
 });
