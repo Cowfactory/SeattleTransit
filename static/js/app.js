@@ -3,10 +3,7 @@ var incomingBussesEl;
 var carouselParentEl;
 var loadScreen;
 var dist;
-
-
-var favoriteBtn = document.getElementById('addfavoritebtn');
-
+var favoriteBtn; 
 
 // Setup functions
 document.addEventListener("DOMContentLoaded", function() {
@@ -24,6 +21,7 @@ $(document).ready(function() {
 function cacheDomElements() {
     incomingBussesEl = document.getElementById("incomingbusses")
     loadScreen = document.getElementById("loadscreen");
+    favoriteBtn = document.getElementById('addfavoritebtn');
 };
 
 function addEventListeners() {
@@ -48,8 +46,6 @@ function findNearbyStops() {
 
             //If we have a last known position: 
             if(lastKnownLat && lastKnownLon) {
-                // statusMsgEl.innerHTML = `<p>${errMsg} ... Using last known location: <br>
-                //     Latitude is: ${lastKnownLat} <br> Longitude is: ${lastKnownLon}</p>`
                 setStatusMsg("Using last known location...")
                 fetchStopsFromApi(lastKnownLat, lastKnownLon);
             } 
@@ -79,12 +75,9 @@ function findNearbyStops() {
 }
 
 function getArrivalsAndDeparturesForStop(stopId) {
-    // if(e.target === carouselParentEl) return; // also needs to filter out the carousel itself
-    // console.log(e);
     console.log(stopId);
     setStatusMsg('Getting Bus List...');
     toggleStatusVisibility();
-    // console.log(e.target.id);
     fetch(`/api/stopDetails?stopid=${stopId}`)
         .then(response => response.json())
         .then(routes => renderRoutes(routes))
@@ -97,7 +90,6 @@ function getArrivalsAndDeparturesForStop(stopId) {
 
 // AJAX render functions
 function renderStops(stops) {
-    // console.log(stops); // Uncomment to view all the data available to a Stop in console
     // Removes carousel
     $('#carouselParent').empty();
 
@@ -114,7 +106,6 @@ function renderStops(stops) {
                 <h6>Distance: ${dist}mi</h6>
             </div>
         </section>`);
-        //<button id=${"fav"+stop.id} onclick="addFavoriteStop(this)">Add To Favorites!</button> 
         $(section).appendTo($('#carousel'));
         M.AutoInit();
         map.addStopToMap(stop);
@@ -123,22 +114,6 @@ function renderStops(stops) {
     });
     setupCarousel(stopMap);
 };
-
-// non functional - not used.
-function addFavoriteStop(e) {
-    let id = e.id.slice(3); //remove the prepended "fav" from the id to get proper stop id
-    let data = {
-        stop_name: e.parentNode.children[0].children[0].textContent,
-        stop_id: id,
-    }
-    // console.log(data.stop_id);
- 
-    // This client sided post request does not work..?
-    // fetch('/stops/new', { //post this data to db
-    //     method: 'post',
-    //     body: data
-    // });
-}
 
 function distance(stop, unit) {
     let lat1 = localStorage.getItem('lastKnownLat');
@@ -181,17 +156,11 @@ function setupCarousel(stopMap) {
         $('.carousel').hide( "slide", { direction: "down" }, "slow" );
         $('#toggle').show( "slide", { direction: "up" }, "slow" );
         $('#incomingbusses').show( "slide", { direction: "up" })
-        // $('.carousel').hide();
-        // $('#toggle').show();
-        // $('#incomingbusses').show();
     }); 
     $('#toggle').click(function(){
         $('#toggle').hide( "slide", { direction: "up" }, "slow" );
         $('#incomingbusses').hide( "slide", { direction: "up" });
         $('.carousel').show( "slide", { direction: "down" }, "slow" );
-        // $('#toggle').hide();
-        // $('#incomingbusses').hide();
-        // $('.carousel').show();
     }); 
     $('.carousel').click(function(e){
         let target; 
@@ -221,7 +190,6 @@ function setupCarousel(stopMap) {
 }
 
 function renderRoutes(routes) {
-    // console.log(routes); // Uncomment to view all the Routes available to a Stop in console
     // Removes all child nodes of stopList ul
     while(incomingBussesEl.firstChild) {
         incomingBussesEl.removeChild(incomingBussesEl.firstChild);
@@ -236,8 +204,6 @@ function renderRoutes(routes) {
 };
 
 function constructCardHtml({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop}) {
-    // console.log({routeShortName, tripHeadsign, scheduledArrivalTime, distanceFromStop});
-    // console.log('here')
     return `
             <div class="tripheadsign">
                 <span>☆</span><div><h5>${tripHeadsign}</h5></div>

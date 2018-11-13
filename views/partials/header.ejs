@@ -42,17 +42,7 @@
 </head>
 <body>
     <a href="#" data-target="slide-out" class="sidenav-trigger card"><i id="menu" class="large material-icons">menu</i></a>
-<script> 
-    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-    let vh = window.innerHeight * 0.01;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-    window.addEventListener('resize', () => {
-        // We execute the same script as before
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
-</script>
+
 <!-- Sidenav -->  
 <div id="slide-out" class="sidenav">
     <div class="user-view sidebar-userinfo">
@@ -70,7 +60,6 @@
         </div>
         <div>
             <% if(user) { %>
-                <!-- <p>Hello</p> -->
                 <% if (user.bio) { %> 
                     <p><%= user.bio %></p>
                 <% } %>
@@ -86,17 +75,14 @@
         <div class="background valign-wrapper profile"></div>
     </div>
     <div class="center-align">
-        <button a href="#!" class="pillbutton"><i class="tiny material-icons">favorite</i>Favorites</button>
+        <button a href="#!" class="disabled pillbutton"><i class="tiny material-icons">favorite</i>Favorites</button>
         <br>
-        <button a href="#!" class="pillbutton"><i class="tiny material-icons">location_on</i>Locate Me</button>
+        <button a href="#!" class="disabled pillbutton"><i class="tiny material-icons">location_on</i>Locate Me</button>
         <br>
-        <button a href="#!" class="pillbutton"><i class="tiny material-icons">add_alert</i>Reminders</button>
+        <button a href="#!" class="disabled pillbutton"><i class="tiny material-icons">add_alert</i>Reminders</button>
         <br>
-        <button a href="#!" class="pillbutton"><i class="tiny material-icons">date_range</i>Schedules</button>
+        <button a href="#!" class="disabled pillbutton"><i class="tiny material-icons">date_range</i>Schedules</button>
         <br>
-        <button a href="#!" id="locationPermBtn" class="pillbutton"><i class="tiny material-icons">location_searching</i>Location Permission</button>
+        <button a href="#!" id="locationPermBtn" class="disabled pillbutton"><i class="tiny material-icons">location_searching</i>Location Permission</button>
     </div>
-    <!-- <div class="page-footer">
-        <a class="btn" href="/logout"><i class="material-icons left">trending_flat</i>Log Out</a>
-    </div> -->
 </div>
