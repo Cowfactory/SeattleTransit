@@ -23,7 +23,8 @@ require('./config/passport');
 
 // Routers
 const authRouter = require('./routes/auth');
-const apiRouter = require('./routes/api/api');
+const obaRouter = require('./routes/api/oneBusAway');
+const userApiRouter = require('./routes/api/users');
 const indexRouter = require('./routes/index');
 
 // Configure view engine
@@ -56,7 +57,8 @@ app.use(passport.session());
 
 // Mount Routers
 app.use('/', authRouter);
-app.use('/api', apiRouter);
+app.use('/api/users', userApiRouter);
+app.use('/api', obaRouter);
 app.use('/', indexRouter);
 
 // Start the server - listen for requests

@@ -9,8 +9,6 @@ router.get('/', function(req, res, next) {
 router.post('/addBio', function(req, res, next) {
     // If no user logged in, reject
     if(!req.user) return next();
-    console.log(req.body.bioText);
-    // console.log(User.findById(req.user._id));
     User.findById(req.user._id, function(err, user) {
         if(err) return next(err);
         user.set({bio: req.body.bioText});
@@ -19,7 +17,6 @@ router.post('/addBio', function(req, res, next) {
         })
     }) 
     User.findByIdAndUpdate(req.user._id, {bio: req.body.bioText});
-    console.log("after");
     res.redirect('/');
 });
 
