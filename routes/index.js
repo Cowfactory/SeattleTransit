@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 
 // add bio to db - Not RESTful
-router.post('/stops', function(req, res, next) {
+router.post('/addBio', function(req, res, next) {
     // If no user logged in, reject
     if(!req.user) return next();
     console.log(req.body.bioText);
